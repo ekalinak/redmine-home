@@ -1,0 +1,74 @@
+{
+	"extensionName" : {
+		"message" : "Redmine home",
+		"description" : "Name of the extension"
+	},
+	"mainHeader" : {
+		"message" : "Redmine home",
+		"description" : "Main header on new tab page"
+	},
+	"googleCom" : {
+		"message" : "Go to google.com",
+		"description" : "..."
+	},
+	"originalSearchLabel" : { 
+		"message" : "Original Chrome New tab",
+		"description" : ""
+	},
+	"optionsPageLabel" : {
+		"message" : "Options page",
+		"description" : "..."
+	},
+	"optionsPageTitle" : { 
+		"message" : "Options page",
+		"description" : "Options page title"
+	},
+	"labelBackNewTab" : {
+		"message" : "Back to New Tab",
+		"description" : "..."
+	},
+	"saveOptionsLabel" : {
+		"message" : "Save options",
+		"description" : ""
+	},
+	"resetOptionsLabel" : {
+		"message" : "Clear Chrome sync storage",
+		"description" : ""
+	},
+	"resetLocalOptionsLabel" : {
+		"message" : "Clear local storage",
+		"description" : ""
+	},
+	"optionsSavedMessage" : {
+		"message" : "Options has been saved",
+		"description" : "Some options has been saved"
+	},
+	"refreshingData" : {
+		"message" : "Refreshing data ...",
+		"description" : ""
+	},
+	"refreshStatus" : {
+		"message" : "Refresh status",
+		"description" : ""
+	},
+	"idLabel" : {
+		"message" : "ID",
+		"description" : ""
+	},
+	"subjectLabel" : {
+		"message" : "Subject",
+		"description" : ""
+	},
+	"projectNameLabel" : {
+	    "message" : "Project name",
+	    "description" : ""
+	},
+	"priorityLabel" : {
+	    "message" : "Priority",
+	    "description" : ""
+	},
+	"trackerLabel" : {
+	    "message" : "Tracker ( Type )",
+	    "description" : ""
+	}
+}
