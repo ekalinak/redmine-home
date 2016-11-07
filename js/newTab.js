@@ -239,6 +239,7 @@
                     this.issueTableVisible(false);
                 }
 
+                this.issuesCount(foundItems.length);
                 this.issues(foundItems);
             };
 
@@ -249,6 +250,7 @@
                 $(this.searchInput).val('');
                 this.resetColumnIcons();
                 this.issues(this.getLocalIssues());
+                this.issuesCount(this.getLocalIssues().length);
                 this.searchActive(false);
             };
 
