@@ -152,7 +152,7 @@
         </a>
     </div>
     <div class="row" data-bind="visible: !issueDetailLoading()">
-        <h2 data-bind="text: openedIssue().name" class="col-xs-12"></h2>
+        <h2 data-bind="html: openedIssue().name" class="col-xs-12"></h2>
     </div>
     <div class="row" data-bind="visible: !issueDetailLoading()">
         <div class="col-xs-8" data-bind="html: openedIssue().description"></div>

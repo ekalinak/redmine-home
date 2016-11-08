@@ -370,7 +370,7 @@
                     success: function(data){
                         var openedIssue = {
                             url: self.options()['redmineUrl']+'issues/'+data.issue.id,
-                            name: '#' + data.issue.id + ': ' + data.issue.subject,
+                            name: data.issue.subject + ', <small>#' + data.issue.id + '</small>',
                             id : data.issue.id,
                             description : convert(data.issue.description),
                             attachments : (data.issue.attachments.length ) ? data.issue.attachments : false,
