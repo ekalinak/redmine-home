@@ -9,7 +9,7 @@
 var inpr,inbq,inbqq,html;
 var aliases = new Array;
 var alg={'>':'right','<':'left','=':'center','<>':'justify','~':'bottom','^':'top'};
-var ent={"'":"&#8217;"," - ":" &#8211; ","--":"&#8212;"," x ":" &#215; ","\\.\\.\\.":"&#8230;","\\(C\\)":"&#169;","\\(R\\)":"&#174;","\\(TM\\)":"&#8482;"};
+var ent={"'":"&#8217;"," - ":" &#8211; ","--":"&#8212;"," x ":" &#215; ","\\.\\.\\.":"&#8230;","\\(C\\)":"&#169;","\\(R\\)":"&#174;","\\(TM\\)":"&#8482;","}}":""};
 var tags={"b":"\\*\\*","i":"__","em":"_","strong":"\\*","cite":"\\?\\?","sup":"\\^","sub":"~","span":"\\%","del":"-","code":"@","ins":"\\+","del":"-"};
 var le="\n\n";
 var lstlev=0,lst="",elst="",intable=0,mm="";
@@ -88,6 +88,10 @@ function convert(t) {
 }
 
 function prep(m){
+	m=m.replace(/---/g,'<hr/>');
+	m=m.replace(/{{collapse\((.*)\)/g,function(match, string){
+		return "<h5>" + string.charAt(0).toUpperCase() + string.slice(1) + "</h5>";	
+	});
 	for(i in ent) {m=m.replace(new RegExp(i,"g"),ent[i]);}
 	for(i in tags) {
 		m = make_tag(m,RegExp("^"+tags[i]+"(.+?)"+tags[i]),i,"");
