@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Redmien home</title>
+    <title>Redmine home</title>
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 
     <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -15,7 +15,7 @@
 </head>
 <body class="container">
 <span id="top"></span>
-<div class="row">
+<div class="row ">
     <div class="col-xs-5">
         <h1 data-bind="text: title" class="col-xs-12"></h1>
     </div>
@@ -68,16 +68,31 @@
     </div>
 </div>
 <hr>
-
-<div class="form-horizontal" data-bind="visible: haveIssues">
-    <div class="form-group" data-bind="visible: searchVisible">
-        <label for="issuesSearch" class="control-label col-xs-2">Search in issues</label>
-        <div class="col-xs-3">
-            <input type="text" data-bind="event: {keyup: $root.searchInIssues}" id="issuesSearch" class="form-control"/>
+<div class="row">
+    <div class="form-horizontal col-xs-6" data-bind="visible: haveIssues">
+        <div class="form-group" data-bind="visible: searchVisible">
+            <div class="col-xs-5">
+                <input type="text" data-bind="event: {keyup: $root.searchInIssues}" id="issuesSearch" 
+                class="form-control"
+                placeholder="Search in issues" />
+            </div>
+            <button class="btn btn-danger" data-bind="visible: searchActive, click: clearSearch($data)">
+                <span class="glyphicon glyphicon-eye-close"></span>
+            </button>
         </div>
-        <button class="btn btn-danger" data-bind="visible: searchActive, click: clearSearch($data)">
-            <span class="glyphicon glyphicon-eye-close"></span>
-        </button>
+    </div>
+    <form class="col-xs-6 form-horizontal">
+        <div class="form-group">
+            <button class="btn btn-primary col-xs-2 pull-right" data-bind="click: goToIssue" >
+                <span class="glyphicon glyphicon-circle-arrow-right"></span>
+            </button>
+            <div class="col-xs-4 pull-right">
+                <input type="text" name="goToIssue" class="form-control" id="goToIssue" placeholder="Issue nr.">
+            </div>
+            <label for="goToIssue" class="control-label col-xs-3 pull-right">Open issue</label>
+        </div>
+        
+        
     </div>
 </div>
 

@@ -703,6 +703,22 @@
                     title: data.name
                 }).popover('show');
             };
+
+            /**
+             * Method redirect to issue with given ID 
+             * @return bool
+             */
+            this.goToIssue = function() {
+                var issue = parseInt($('#goToIssue').val());
+
+                if ( issue ) {
+                    var url = this.options()['redmineUrl'] + 'issues/' + issue;
+                    this.openLink(url);
+                    return true;
+                }
+                console.log('Not given a number');
+                return false;
+            }
 		};
 		ko.applyBindings(new newTabViewModel().init());
         // $('[data-toggle="popover"]').popover({html: true});
