@@ -713,7 +713,7 @@
 
                 if ( issue ) {
                     var url = this.options()['redmineUrl'] + 'issues/' + issue;
-                    this.openLink(url);
+                    window.open(url, '_blank');
                     return true;
                 }
                 console.log('Not given a number');
