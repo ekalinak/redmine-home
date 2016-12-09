@@ -194,6 +194,15 @@
                 window.open(self.options()['redmineUrl'] + 'issues/' + this.id,'_blank');
 			};
 
+            this.redirectToHome = function(){
+                var url = this.options()['redmineUrl'];
+                if ( url ) {
+                    this.openLink(url);    
+                    return true;
+                }
+                return false;
+            };
+
             /**
              *  Filter currently displayed issues
              *
