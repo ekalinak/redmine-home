@@ -153,7 +153,7 @@
                         headers : {
                             'X-Redmine-API-Key' : items.options['redmineApi']
                         },
-                        url : items.options['redmineUrl'] + 'issues.json?assigned_to_id=me',
+                        url : items.options['redmineUrl'] + 'issues.json?assigned_to_id=me&sort=priority:desc,id:asc',
                         success: function(data){
                             self.issues(data.issues);
                             self.refreshingStatus(false);
