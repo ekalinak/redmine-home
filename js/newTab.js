@@ -153,7 +153,7 @@
                         headers : {
                             'X-Redmine-API-Key' : items.options['redmineApi']
                         },
-                        url : items.options['redmineUrl'] + 'issues.json?assigned_to_id=me&sort=priority:desc',
+                        url : items.options['redmineUrl'] + 'issues.json?assigned_to_id=me',
                         success: function(data){
                             self.issues(data.issues);
                             self.refreshingStatus(false);
@@ -193,6 +193,15 @@
 			self.redirectToIssue = function(){
                 window.open(self.options()['redmineUrl'] + 'issues/' + this.id,'_blank');
 			};
+
+            this.redirectToHome = function(){
+                var url = this.options()['redmineUrl'];
+                if ( url ) {
+                    this.openLink(url);    
+                    return true;
+                }
+                return false;
+            };
 
             /**
              *  Filter currently displayed issues
