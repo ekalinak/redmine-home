@@ -8,14 +8,19 @@
 	"description" : "Extension replaces native google new tab window with Redmine connector",
 	"icons": {},
 
+	"omnibox" : {
+		"keyword" : "red"
+	},
+
 	"background" : {
-		"persistant": false
+		"persistant": false,
+		"scripts" : ["js/omnibox.js"]
 	},
 	"chrome_url_overrides" : {
 		"newtab": "html/newTab.html"
 	},
 	"content_security_policy" : "script-src 'self' 'unsafe-eval'; object-src 'self'",
 	"permissions": [
-    	"<all_urls>", "storage","notifications"
+    	"<all_urls>", "storage","notifications","tabs"
 	]
 }

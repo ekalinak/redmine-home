@@ -96,6 +96,69 @@
             	localStorage.removeItem('issuesLastUpdated');
             	localStorage.removeItem('projectsData');
             	localStorage.removeItem('redmineIssues');
+			},
+
+			parseProjects : function(){
+            	chrome.storage.sync.get('options',function(items){
+                    if ( typeof(items.options) == 'undefined') {
+                        window.location.href='options.html';
+                    }
+
+                    var options = items.options;
+                    var stopFlag = false;
+                    var step = 0;
+                    var counter = 0;
+                    var safeCounter = 0;
+                    localStorage.setItem('projects',JSON.stringify({}));
+
+                    do {
+                    	safeCounter++;
+                        $.ajax({
+                            contentType : 'application/json',
+                            headers : {
+                                'X-Redmine-API-Key' : options['redmineApi']
+                            },
+                            url : options['redmineUrl'] + 'projects.json?limit=100&offset='+step*100,
+                            async: false,
+                            success : function( data ){
+                            	if ( data.projects.length < 100 ) {
+                            		stopFlag = true;
+								}
+                                var i;
+                            	var savedProjects = JSON.parse(localStorage.getItem('projects'));
+                                var projects = ( savedProjects ) ? savedProjects : {};
+                                for ( i in data.projects ) {
+                                    var name = data.projects[i]['identifier'];
+                                    var desc = data.projects[i]['name'].replace('&','and');
+                                    if ( data.projects[i]['description'].length ) {
+                                    	desc += ': ' + data.projects[i]['description']
+												.substring(0,50)
+												.replace('&',' and ');
+									}
+                                    projects[counter] = {
+                                        content: 		name,
+                                        description: 	desc
+                                    };
+                                    counter++;
+                                }
+                                step++;
+                                localStorage.setItem('projects',JSON.stringify(projects));
+                            }
+                        });
+					} while ( !stopFlag && safeCounter < 20 );
+                });
+			},
+			getProjectLabel : function(){
+				var savedProjects = JSON.parse(localStorage.projects);
+				if ( savedProjects ){
+					var counter = 0;
+					for ( var i in savedProjects ) {
+						counter++;
+					}
+				} else {
+					return 'There are no parsed projects'
+				}
+				return 'There are ' + counter + ' projects saved.';
 			}
 		};
 

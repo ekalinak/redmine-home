@@ -151,6 +151,19 @@
         </div>
     </fieldset>
     <fieldset>
+        <legend>Project data retrieve</legend>
+        <div class="form-group">
+            <label for="projectStatus" class="control-label col-xs-3"
+                   data-placement="right" title="All data, which were saved to local storage will be removed. After this action you have to configure extension again."
+                   data-toggle="tooltip">Remove all localy saved data.</label>
+            <div class="col-xs-8">
+                <div class="btn btn-sm btn-danger col-xs-12" id="projectStatus" data-bind="click: parseProjects">
+                   <span data-bind="text: getProjectLabel()"></span>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
         <legend>Data clear</legend>
         <div class="form-group">
             <label for="resetGoogleData" class="control-label col-xs-3"
