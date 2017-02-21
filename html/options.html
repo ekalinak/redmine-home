@@ -155,10 +155,11 @@
         <div class="form-group">
             <label for="projectStatus" class="control-label col-xs-3"
                    data-placement="right" title="All data, which were saved to local storage will be removed. After this action you have to configure extension again."
-                   data-toggle="tooltip">Remove all localy saved data.</label>
+                   data-toggle="tooltip">Parse projects locally</label>
             <div class="col-xs-8">
-                <div class="btn btn-sm btn-danger col-xs-12" id="projectStatus" data-bind="click: parseProjects">
-                   <span data-bind="text: getProjectLabel()"></span>
+                <div class="btn btn-sm col-xs-12" id="projectStatus"
+                     data-bind="click: parseProjects, css: getProjectStyle()">
+                   <span data-bind="text: projectLabel"></span>
                 </div>
             </div>
         </div>
@@ -170,8 +171,10 @@
                    data-placement="right" title="All data which are stored to chrome sync storage will be removed."
                    data-toggle="tooltip">Remove Chrome sync storage</label>
             <div class="col-xs-8">
-                <button type="submit" data-bind="click: resetOptions" class="btn btn-danger btn-sm col-xs-12" id="resetGoogleData">
-                    <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;
+                <button type="submit" data-bind="click: resetOptions"
+                        class="btn btn-danger        btn-sm col-xs-12"
+                        id="resetGoogleData">
+                    <span class="glyphicon glyphicon-trash"></span>
                     <span data-bind="text: resetOptionsLabel"></span>
                 </button>
             </div>

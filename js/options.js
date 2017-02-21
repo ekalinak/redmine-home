@@ -9,6 +9,10 @@
             optionsSavedMessage 	: chrome.i18n.getMessage('optionsSavedMessage'),
             resetLocalOptionsLabel 	: chrome.i18n.getMessage('resetLocalOptionsLabel'),
 
+			// Dynamic labels
+			projectLabel : ko.observable(),
+			projectStatus : ko.observable(false),
+
 			// Control variables
 			optionsSaved : ko.observable(false),
 
@@ -39,6 +43,7 @@
 						$(self.optionsDefinition[key]).val(items.options[key]);
 					}
                 });
+                this.setProjectLabel();
                 return this;
 			},
 
@@ -99,6 +104,7 @@
 			},
 
 			parseProjects : function(){
+            	var self1 = this;
             	chrome.storage.sync.get('options',function(items){
                     if ( typeof(items.options) == 'undefined') {
                         window.location.href='options.html';
@@ -110,6 +116,7 @@
                     var counter = 0;
                     var safeCounter = 0;
                     localStorage.setItem('projects',JSON.stringify({}));
+                    var self = self1;
 
                     do {
                     	safeCounter++;
@@ -146,9 +153,17 @@
                             }
                         });
 					} while ( !stopFlag && safeCounter < 20 );
+
+                    self.projectStatus(true);
+                    self.setProjectLabel();
                 });
 			},
-			getProjectLabel : function(){
+			setProjectLabel : function(){
+				if ( typeof(localStorage.projects) == 'undefined') {
+					this.projectLabel('There is no parsed projects yet. Please click here to parse them.');
+					this.projectStatus(false);
+					return true;
+				}
 				var savedProjects = JSON.parse(localStorage.projects);
 				if ( savedProjects ){
 					var counter = 0;
@@ -156,9 +171,18 @@
 						counter++;
 					}
 				} else {
-					return 'There are no parsed projects'
+					this.projectStatus(false);
+					this.projectLabel('There are no parsed projects');
+					return true;
 				}
-				return 'There are ' + counter + ' projects saved.';
+				this.projectLabel('There are ' + counter + ' projects saved.');
+				this.projectStatus(true);
+			},
+
+			getProjectStyle: function(){
+				return ( this.projectStatus() )
+                ? 'btn-info'
+                : 'btn-warning';
 			}
 		};
 
