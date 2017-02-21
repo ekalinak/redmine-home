@@ -11,8 +11,11 @@ Extension does not try to replace Redmine system. Main idea is to get quick over
 * Various links to Redmine system
 * Choose from various bootstrap themes
 * View task details _( beta )_
+* omnibox quick access _( documented in [Omnibox manual](docs/Omnibox.md) )_
 
-There are also planned features, which are nto implemented yet. You can find them in [planned featuers document](docs/Planned-features.md).
+There are also planned features, which aren't implemented yet. You can find them in [planned featuers document](docs/Planned-features.md).
+
+If you will find any kind of bug during using this extension, feel free to create [issue on GitHub](https://github.com/ekalinak/redmine-home/issues?q=is%3Aopen+is%3Aissue)
 
 ## Installation
 Extension is not available to install via Chrome Web store. Instead of this, you have to install this extension locally.
