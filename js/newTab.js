@@ -52,7 +52,7 @@
              */
             this.init = function(){
                 var self = this;
-                var redmineIssues = this.getLocalIssues();
+                var redmineIssues = this.getLocalIssues(true);
 
                 /*if ( !redmineIssues ) { // Data have to be downloaded from the remote server
                     return this;
@@ -267,9 +267,12 @@
              * Return locally saved issues. If needed, it updates list of issues
              * from remote.
              *
+             * Init parameter is to avoid multiple definition of "setTimeout" function.
+             *
+             * @param init true|false
              * @returns {*}
              */
-			this.getLocalIssues = function(){
+			this.getLocalIssues = function( init ){
 			    var localData = JSON.parse(localStorage.getItem('redmineIssues'));
                 var date = new Date();
 
@@ -284,6 +287,10 @@
 
                 if ( typeof(localData) != 'object' || !localData ){
 			        return false;
+                }
+
+                if ( init ) {
+                    setTimeout(this.getLocalIssues.bind(this, true), 3000);    
                 }
 
 			    return localData.issues;
