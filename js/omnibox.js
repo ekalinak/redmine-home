@@ -44,7 +44,15 @@ chrome.omnibox.onInputChanged.addListener(
     function(text, suggest) {
         var omni = Redmine.Omnibox;
         omni.loadConfig();
-        if ( text.length > 2 ) {
+		if ( text.indexOf(' ') !== -1) {
+			var suggestion = [
+				{ content: text + 'issues', description :  'Go to project issues ...' },
+				{ content: text + 'wiki', description :  'Go to project wiki ...' },
+				{ content: text + 'repository', description : 'Go to project repository ...' },
+				{ content: text + 'activity', description : 'Go to project activities ...' },
+			];
+			suggest(suggestion);
+		} else if ( text.length > 2 ) {
             var suggestion = omni.searchProject(text);
             suggest(suggestion);
         }

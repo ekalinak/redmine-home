@@ -33,6 +33,8 @@ If you want to show directly particular part of the project _( i.e. Issues )_, a
 project-name [issues|repository|wiki|...]
 ```
 
+**Tip:** *You can access to various parts of the project also by selecting desired project by arrow keys and then hit [space] button. By this, omnibox will suggest you direct links to selected project parts.*
+
 ### Access directly to issue
 After omnibox is activated, you can write directly ***"issue"*** _( no project name, just type "issue" )_, then add space and then number of task/issue in Redmine. When you hit the enter key, you will be redirected directly to that issue.
 
