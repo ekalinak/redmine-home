@@ -1,0 +1,13 @@
+.top-buffer { margin-top: 20px; }
+.is-loading > div { visibility: hidden; }
+.is-loading > div:after { 
+	background: url(../res/loading.gif) 50% 50% no-repeat;
+    background-size: 20px;
+    content: '';
+    width: 100%;
+    height: 20px;
+    display: block;
+    visibility: visible;
+    text-align: center;
+}
+.is-loading span { display: none; }

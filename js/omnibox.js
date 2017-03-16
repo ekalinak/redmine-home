@@ -21,7 +21,7 @@ Redmine.Omnibox = {
     },
     getProjects : function(){
         if ( typeof(localStorage.projects) == 'undefined' ) {
-            localStorage.projects = {};
+            localStorage.projects = JSON.stringify({});
         }
         return JSON.parse(localStorage.projects);
     },
@@ -30,12 +30,20 @@ Redmine.Omnibox = {
         var suggest = [];
         var projects = this.getProjects();
 
-        for ( i in projects ) {
-            if ( projects[i].content.toLowerCase().indexOf(pattern.toLowerCase()) != -1
-                || projects[i].description.toLowerCase().indexOf(pattern.toLowerCase()) != -1 ) {
-                suggest.push(projects[i]);
+        if ( !projects.lenght ) {
+            suggest.push({
+                    content: 'No projects: ', 
+                    description: 'There are no parsed projects yet. Please go to OPTIONS and parse projects locally.'
+            });
+        } else {
+            for ( i in projects ) {
+                if ( projects[i].content.toLowerCase().indexOf(pattern.toLowerCase()) != -1
+                    || projects[i].description.toLowerCase().indexOf(pattern.toLowerCase()) != -1 ) {
+                    suggest.push(projects[i]);
+                }
             }
         }
+        
         return suggest;
     },
     getCustomSuggestion: function( text ){
