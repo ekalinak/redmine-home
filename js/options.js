@@ -105,60 +105,70 @@
 
 			parseProjects : function(){
             	var self1 = this;
-            	chrome.storage.sync.get('options',function(items){
-                    if ( typeof(items.options) == 'undefined') {
-                        window.location.href='options.html';
-                    }
+            	this.setProjectLabel(true);
+            	setTimeout(function(){
+            		chrome.storage.sync.get('options',function(items){
+	                    if ( typeof(items.options) == 'undefined') {
+	                        window.location.href='options.html';
+	                    }
 
-                    var options = items.options;
-                    var stopFlag = false;
-                    var step = 0;
-                    var counter = 0;
-                    var safeCounter = 0;
-                    localStorage.setItem('projects',JSON.stringify({}));
-                    var self = self1;
+	                    var options = items.options;
+	                    var stopFlag = false;
+	                    var step = 0;
+	                    var counter = 0;
+	                    var safeCounter = 0;
+	                    localStorage.setItem('projects',JSON.stringify({}));
+	                    var self = self1;
 
-                    do {
-                    	safeCounter++;
-                        $.ajax({
-                            contentType : 'application/json',
-                            headers : {
-                                'X-Redmine-API-Key' : options['redmineApi']
-                            },
-                            url : options['redmineUrl'] + 'projects.json?limit=100&offset='+step*100,
-                            async: false,
-                            success : function( data ){
-                            	if ( data.projects.length < 100 ) {
-                            		stopFlag = true;
-								}
-                                var i;
-                            	var savedProjects = JSON.parse(localStorage.getItem('projects'));
-                                var projects = ( savedProjects ) ? savedProjects : {};
-                                for ( i in data.projects ) {
-                                    var name = data.projects[i]['identifier'];
-                                    var desc = data.projects[i]['name'].replace('&','and');
-                                    if ( data.projects[i]['description'].length ) {
-                                    	desc += ': ' + data.projects[i]['description']
-												.substring(0,50)
-												.replace('&',' and ');
+	                    do {
+	                    	safeCounter++;
+	                        $.ajax({
+	                            contentType : 'application/json',
+	                            headers : {
+	                                'X-Redmine-API-Key' : options['redmineApi']
+	                            },
+	                            url : options['redmineUrl'] + 'projects.json?limit=100&offset='+step*100,
+	                            async: false,
+	                            success : function( data ){
+	                            	if ( data.projects.length < 100 ) {
+	                            		stopFlag = true;
 									}
-                                    projects[counter] = {
-                                        content: 		name,
-                                        description: 	desc
-                                    };
-                                    counter++;
-                                }
-                                step++;
-                                localStorage.setItem('projects',JSON.stringify(projects));
-                            }
-                        });
-					} while ( !stopFlag && safeCounter < 20 );
+	                                var i;
+	                            	var savedProjects = JSON.parse(localStorage.getItem('projects'));
+	                                var projects = ( savedProjects ) ? savedProjects : {};
+	                                for ( i in data.projects ) {
+	                                    var name = data.projects[i]['identifier'];
+	                                    var desc = data.projects[i]['name'].replace('&','and');
+	                                    if ( data.projects[i]['description'].length ) {
+	                                    	desc += ': ' + data.projects[i]['description']
+													.substring(0,50)
+													.replace('&',' and ');
+										}
+	                                    projects[counter] = {
+	                                        content: 		name,
+	                                        description: 	desc
+	                                    };
+	                                    counter++;
+	                                }
+	                                step++;
+	                                localStorage.setItem('projects',JSON.stringify(projects));
+	                            }
+	                        });
+						} while ( !stopFlag && safeCounter < 20 );
 
-                    self.projectStatus(true);
-                    self.setProjectLabel();
-                });
+	                    self.projectStatus(true);
+	                    self.setProjectLabel();
+	                    // self.toggleLoader(currentTarget);
+	                });
+            	}, 200);
+            	
 			},
-			setProjectLabel : function(){
+			setProjectLabel : function( loading = false ){
+				if ( loading ) {
+					this.projectLabel('Projects are being downloaded ...');
+					return true;
+				}
+
 				if ( typeof(localStorage.projects) == 'undefined') {
 					this.projectLabel('There is no parsed projects yet. Please click here to parse them.');
 					this.projectStatus(false);
@@ -177,6 +187,12 @@
 				}
 				this.projectLabel('There are ' + counter + ' projects saved.');
 				this.projectStatus(true);
+			},
+
+			toggleLoader : function( obj,event ){
+				var elem = event.currentTarget.parentElement;
+				elem.classList.toggle('is-loading');
+				this.parseProjects();
 			},
 
 			getProjectStyle: function(){

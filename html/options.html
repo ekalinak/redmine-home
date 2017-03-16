@@ -3,7 +3,7 @@
 <head>
     <title>Options - Redmine home</title>
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../css/scrollBar.css" />
+    <link rel="stylesheet" href="../css/custom.css" />
 
     <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="../bower_components/bootstrap/js/tooltip.js"></script>
@@ -150,11 +150,11 @@
             </div>
         </div>
     </fieldset>
-    <fieldset>
-        <legend>Project data retrieve</legend>
+    <fieldset class="top-buffer">
+        <legend>Project data retrieve ( Omnibox functionality )</legend>
         <div class="form-group">
             <label for="projectStatus" class="control-label col-xs-3"
-                   data-placement="right" title="All data, which were saved to local storage will be removed. After this action you have to configure extension again."
+                   data-placement="right" title="By clicking on this button you will download all projects assigned to you locally. Locally parsed projects are required for omnibox to work correctly."
                    data-toggle="tooltip">Parse projects locally</label>
             <div class="col-xs-8">
                 <div class="btn btn-sm col-xs-12" id="projectStatus"
