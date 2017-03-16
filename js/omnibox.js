@@ -37,6 +37,31 @@ Redmine.Omnibox = {
             }
         }
         return suggest;
+    },
+    getCustomSuggestion: function( text ){
+        var suggestion, searchFor, i, suggestionFiltered, content;
+
+        content = text.split(' ')[0];
+        searchFor = text.split(' ')[1];
+        
+        suggestion = [
+                { content: content + ' issues', description :  'Go to project issues ...' },
+                { content: content + ' wiki', description :  'Go to project wiki ...' },
+                { content: content + ' repository', description : 'Go to project repository ...' },
+                { content: content + ' activity', description : 'Go to project activities ...' },
+        ];
+        
+        if ( searchFor.length ) {
+            suggestionFiltered = [];
+            for ( i = 0; i < suggestion.length; i++ ) {
+                if ( suggestion[i].content.indexOf(searchFor) !== -1 ) {
+                    suggestionFiltered.push(suggestion[i]);
+                }
+            }
+            return suggestionFiltered;
+        }
+
+        return suggestion;
     }
 };
 
@@ -45,12 +70,7 @@ chrome.omnibox.onInputChanged.addListener(
         var omni = Redmine.Omnibox;
         omni.loadConfig();
 		if ( text.indexOf(' ') !== -1) {
-			var suggestion = [
-				{ content: text + 'issues', description :  'Go to project issues ...' },
-				{ content: text + 'wiki', description :  'Go to project wiki ...' },
-				{ content: text + 'repository', description : 'Go to project repository ...' },
-				{ content: text + 'activity', description : 'Go to project activities ...' },
-			];
+			var suggestion = omni.getCustomSuggestion(text);
 			suggest(suggestion);
 		} else if ( text.length > 2 ) {
             var suggestion = omni.searchProject(text);
