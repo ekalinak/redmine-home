@@ -30,7 +30,7 @@ Redmine.Omnibox = {
         var suggest = [];
         var projects = this.getProjects();
 
-        if ( !projects.lenght ) {
+        if ( Object.keys(projects).length == 0 ) {
             suggest.push({
                     content: 'No projects: ', 
                     description: 'There are no parsed projects yet. Please go to OPTIONS and parse projects locally.'
