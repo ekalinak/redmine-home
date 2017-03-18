@@ -32,7 +32,7 @@ Redmine.Omnibox = {
 
         if ( Object.keys(projects).length == 0 ) {
             suggest.push({
-                    content: 'No projects: ', 
+                    content: 'no-projects', 
                     description: 'There are no parsed projects yet. Please go to OPTIONS and parse projects locally.'
             });
         } else {
@@ -92,7 +92,9 @@ chrome.omnibox.onInputEntered.addListener(
         var options = Redmine.Omnibox.getConfig();
         var redmineUrl = options.redmineUrl;
         var params = text.split(' ');
-        if ( params[0] === 'issue' ) {
+        if ( params[0] === 'no-projects' ) {
+            chrome.tabs.update({url: 'html/options.html'})
+        } else if ( params[0] === 'issue' ) {
             chrome.tabs.update({url: redmineUrl + "issues/" + params[1]});
         } else {
             var project = params[0];
