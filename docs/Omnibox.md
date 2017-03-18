@@ -8,6 +8,8 @@ Omnibox provides quick jump to projects pages or issues in Redmine.
  
  To do that, you have to go to ***Options*** and click on button ***"Parse projects locally"*** in "Project data retrieve" section.
 
+<img src="res/parse_projects.png" alt="Where to parse projects from Redmine" width="95%">
+
 ## Activating and searching in omnibox
 After you projects are parsed, you can activate omnibox by clicking on any webpage to URL bar and type **red**. After that you should hit **TAB** and omnibox for Redmine is activated
 

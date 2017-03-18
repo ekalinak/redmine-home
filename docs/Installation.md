@@ -20,3 +20,4 @@ Perfect. At this moment extension is installed in Google Chrome.
   * Redmine API key
 4. Save options *( big green save button at the bottom )*
 5. Open new tab again. Now you should see Redmine tasks assigned to you.
+6. To use [omnibox features](Omnibox.md) go to options page and click on button with text *"There is no parsed projects yet. Please click here to parse them."* in section *"Project data retrieve ( Omnibox functionality )"*
