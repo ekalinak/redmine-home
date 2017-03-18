@@ -50,23 +50,29 @@
 			saveOptions : function(){
 				var self = this;
 				var options = {};
+				var themeChanged = false;
 
 				for ( var key in self.optionsDefinition ) {
 					var valuetoSave = $(self.optionsDefinition[key]).val();
+
+					if ( key == 'theme' && valuetoSave != localStorage.getItem('theme') ) {
+						themeChanged = true;
+					}
+
 					if ( key == 'redmineUrl') {
 						if ( valuetoSave.substr(-1) != '/' ) {
                             valuetoSave += '/';
                             $(self.optionsDefinition[key]).val(valuetoSave);
 						}
-
 						if ( valuetoSave.substr(0,4) != 'http' ) {
 							valuetoSave = 'https://' + valuetoSave;
 						}
-
 					}
+					
 					if ( this.optionsToLocalSave.indexOf(key) != -1 ) {
 						localStorage.setItem(key,valuetoSave);
 					}
+
                     options[key] = valuetoSave;
 				}
 
@@ -76,6 +82,9 @@
 					self.optionsSaved(true);
 					setTimeout(function(){
 						self.optionsSaved(false);
+						if ( themeChanged ) {
+							location.reload();
+						}
 					},3000)
 				})
 			},
