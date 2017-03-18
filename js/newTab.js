@@ -148,12 +148,19 @@
                 chrome.storage.sync.get('options',function(items){
                     self.options(items.options);
                     self.refreshingStatus(true);
+                    var ajaxUrl;
+                    if ( parseInt(self.options()['useOnlyOpenStatus']) ) {
+                        ajaxUrl = items.options['redmineUrl'] + 'issues.json?assigned_to_id=me&sort=priority:desc,id:asc&status_id=open'
+
+                    } else {
+                        ajaxUrl = items.options['redmineUrl'] + 'issues.json?assigned_to_id=me&sort=priority:desc,id:asc'
+                    }
                     $.ajax({
                         contentType : 'application/json',
                         headers : {
                             'X-Redmine-API-Key' : items.options['redmineApi']
                         },
-                        url : items.options['redmineUrl'] + 'issues.json?assigned_to_id=me&sort=priority:desc,id:asc',
+                        url : ajaxUrl,
                         success: function(data){
                             self.issues(data.issues);
                             self.refreshingStatus(false);

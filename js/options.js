@@ -25,14 +25,16 @@
                 issueDetailEnabled	: '#issueDetailEnabled',
                 openIssuesNewTab 	: '#openIssuesNewTab',
                 myAccountLink		: '#myAccountLink',
-				showTime			: '#showTime'
+				showTime			: '#showTime',
+                useOnlyOpenStatus 	: '#useOnlyOpenStatus'
 			},
 
 			optionsToLocalSave : [
 				'openIssuesNewTab',
 				'issueDetailEnabled',
 				'issuesUpdateInterval',
-				'theme'
+				'theme',
+				'useOnlyOpenStatus'
 			],
 
 			init : function(){
