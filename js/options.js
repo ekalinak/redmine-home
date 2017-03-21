@@ -15,6 +15,10 @@
 
 			// Control variables
 			optionsSaved : ko.observable(false),
+			filterStatusFlag : ko.observable(false),
+			filterStatus : ko.observable(false),
+
+			issueStatuses : ko.observableArray(),
 
 			// Options
 			optionsDefinition : {
@@ -26,7 +30,8 @@
                 openIssuesNewTab 	: '#openIssuesNewTab',
                 myAccountLink		: '#myAccountLink',
 				showTime			: '#showTime',
-                useOnlyOpenStatus 	: '#useOnlyOpenStatus'
+                filterStatusFlag 	: '#filterStatusFlag',
+				filterStatus		: '#filterStatus'
 			},
 
 			optionsToLocalSave : [
@@ -34,7 +39,8 @@
 				'issueDetailEnabled',
 				'issuesUpdateInterval',
 				'theme',
-				'useOnlyOpenStatus'
+				'filterStatusFlag',
+				'filterStatus'
 			],
 
 			init : function(){
@@ -46,6 +52,11 @@
 					}
                 });
                 this.setProjectLabel();
+                // If should be displayed second part
+                this.initCustomStatusFlag();
+                // Grab and prepare statuses of all issues
+                this.initIssueStatuses();
+
                 return this;
 			},
 
@@ -198,6 +209,87 @@
 				}
 				this.projectLabel('There are ' + counter + ' projects saved.');
 				this.projectStatus(true);
+			},
+
+			initIssueStatuses : function(){
+				var name, tasks, selected, added, item;
+				var self = this;
+				tasks =  JSON.parse(localStorage.getItem('redmineIssues'));
+				if ( ! tasks ) {
+					return false;
+				}
+
+				added = [];
+				var savedStatues = this.getSavedFilterStatuses();
+
+				for ( var key in tasks.issues ) {
+					name = tasks.issues[key]['status']['name'];
+                    selected = ( savedStatues.indexOf(name) !== -1 );
+					item = {'name' : name, 'selected' : selected, 'viewModel': self};
+
+					if ( added.indexOf(name) === -1 ) {
+                        // added[name] = selected;
+                        this.issueStatuses.push(item);
+                        added.push(name);
+					}
+				}
+			},
+
+            switchStatus : function( obj, elem ){
+				var input = $(obj.viewModel.optionsDefinition['filterStatus']);
+				var curVals = input.val();
+				var curValsArr = (curVals.length == 0) ? [] : curVals.split(',');
+                var index = curValsArr.indexOf(obj.name);
+                var selected = false;
+				if ( index !== -1 ) {
+					curValsArr.splice(index,1);
+				} else {
+					curValsArr.push(obj.name);
+					selected = true;
+				}
+
+				for ( var k in obj.viewModel.issueStatuses() ) {
+                    if ( obj.viewModel.issueStatuses()[k].name === obj.name ) {
+                        obj.viewModel.issueStatuses()[k].selected = selected;
+                        break;
+					}
+				}
+
+				$(elem.currentTarget).toggleClass('btn-danger')
+					.toggleClass('btn-success');
+
+                input.val(curValsArr.join(','));
+			},
+
+            /**
+			 * Return statuses, which should be omitted from
+			 * displaying in Redmine home.
+			 *
+             * @returns {Array}
+             */
+			getSavedFilterStatuses : function(){
+				var savedStatuses  = localStorage.getItem('filterStatus');
+				if ( !savedStatuses ) {
+					return [];
+				}
+
+				return savedStatuses.split(',');
+			},
+
+			initCustomStatusFlag : function(){
+                if ( parseInt(localStorage.getItem('filterStatusFlag')) ) {
+                    this.filterStatusFlag(true);
+                }
+
+                this.filterStatus(this.getSavedFilterStatuses());
+			},
+
+			manageCustomStatus : function(){
+				if ( parseInt($(this.optionsDefinition['filterStatusFlag']).val()) ) {
+					this.filterStatusFlag(true);
+				} else {
+					this.filterStatusFlag(false);
+				}
 			},
 
 			toggleLoader : function( obj,event ){

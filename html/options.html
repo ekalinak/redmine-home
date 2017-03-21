@@ -71,14 +71,29 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="useOnlyOpenStatus" class="control-label col-xs-3"
-                   data-placement="right" title="Select 'Yes' if you want to show only tasks, which are opened. ( tasks with status 'closed' will not be )"
-                   data-toggle="tooltip">Show only opened tasks ?</label>
+            <label for="filterStatusFlag" class="control-label col-xs-3"
+                   data-placement="right" title="Select 'Yes' if you want to spefify which statuses should not be displayed."
+                   data-toggle="tooltip">Filter tasks based on status ?</label>
             <div class="col-xs-8">
-                <select id="useOnlyOpenStatus" name="use_custom_status" class="form-control">
+                <select id="filterStatusFlag" name="use_custom_status"
+                        class="form-control" data-bind="event: {change : manageCustomStatus}">
                     <option value="0">No</option>
                     <option value="1">Yes</option>
                 </select>
+            </div>
+        </div>
+        <div class="form-group" data-bind="visible: filterStatusFlag">
+            <label for="filterStatus" class="control-label col-xs-3"
+                   data-placement="right" title="Tasks which will have those statuses will not be displayed in redmine home."
+                   data-toggle="tooltip">Which statuses should be removed.</label>
+            <div class="col-xs-8">
+                <input type="text" id="filterStatus" name="filter_status" class="form-control" disabled />
+                <span data-bind="foreach: issueStatuses">
+                    <button class="btn btn-sm top-buffer-5"
+                            data-bind="text: name, click: $parent.switchStatus, css: { 'btn-danger': selected, 'btn-success': !selected }"
+                            data-placement="bottom" data-toggle="tooltip" title="Green = visible; Red = not visible"></button>
+                </span>
+
             </div>
         </div>
     </fieldset>

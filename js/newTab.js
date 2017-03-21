@@ -148,13 +148,7 @@
                 chrome.storage.sync.get('options',function(items){
                     self.options(items.options);
                     self.refreshingStatus(true);
-                    var ajaxUrl;
-                    if ( parseInt(self.options()['useOnlyOpenStatus']) ) {
-                        ajaxUrl = items.options['redmineUrl'] + 'issues.json?assigned_to_id=me&sort=priority:desc,id:asc&status_id=open'
-
-                    } else {
-                        ajaxUrl = items.options['redmineUrl'] + 'issues.json?assigned_to_id=me&sort=priority:desc,id:asc'
-                    }
+                    var ajaxUrl = items.options['redmineUrl'] + 'issues.json?assigned_to_id=me&sort=priority:desc,id:asc';
                     $.ajax({
                         contentType : 'application/json',
                         headers : {
@@ -300,7 +294,23 @@
                     setTimeout(this.getLocalIssues.bind(this, true), 3000);    
                 }
 
-			    return localData.issues;
+                if ( !parseInt(localStorage.getItem('filterStatusFlag')) ) {
+                    return localData.issues;
+                }
+clearSearch
+                var filterIssues = localStorage.getItem('filterStatus').split(',');
+                var finalTasks = {};
+                finalTasks.issues = [];
+
+
+                for ( var i in localData.issues ) {
+                    if ( filterIssues.indexOf(localData.issues[i].status.name) === -1 ) {
+                        finalTasks.issues.push(localData.issues[i]);
+                    }
+                }
+
+                return finalTasks.issues;
+
             };
 
             /**
