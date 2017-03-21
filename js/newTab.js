@@ -297,7 +297,7 @@
                 if ( !parseInt(localStorage.getItem('filterStatusFlag')) ) {
                     return localData.issues;
                 }
-clearSearch
+
                 var filterIssues = localStorage.getItem('filterStatus').split(',');
                 var finalTasks = {};
                 finalTasks.issues = [];
