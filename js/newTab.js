@@ -156,15 +156,16 @@
                         },
                         url : ajaxUrl,
                         success: function(data){
-                            self.issues(data.issues);
-                            self.refreshingStatus(false);
-
                             var date = new Date();
 
                             localStorage.setItem('redmineIssues', JSON.stringify(data));
                             localStorage.setItem('issuesLastUpdated', date.getTime() );
+                            self.refreshingStatus(false);
+
+                            var filteredIssues = self.filterIssues(data.issues);
+
+                            self.issues(filteredIssues);
                             self.issuesUpdatedFlag(date.getTime());
-                            self.issuesCount(data.issues.length);
                         }
                     });
                 });
@@ -298,20 +299,26 @@
                     return localData.issues;
                 }
 
+                return this.filterIssues(localData.issues);
+
+            };
+
+            this.filterIssues = function( issues ){
                 var filterIssues = localStorage.getItem('filterStatus').split(',');
                 var finalTasks = {};
                 finalTasks.issues = [];
 
-
-                for ( var i in localData.issues ) {
-                    if ( filterIssues.indexOf(localData.issues[i].status.name) === -1 ) {
-                        finalTasks.issues.push(localData.issues[i]);
+                for ( var i in issues ) {
+                    if ( filterIssues.indexOf(issues[i].status.name) === -1 ) {
+                        finalTasks.issues.push(issues[i]);
                     }
                 }
 
-                return finalTasks.issues;
+                this.issuesCount(finalTasks.issues.length);
 
-            };
+                return finalTasks.issues;
+            }
+
 
             /**
              * Returns issue label class
