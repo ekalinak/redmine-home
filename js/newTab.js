@@ -18,6 +18,7 @@
             // Class control variables
             this.issues             = ko.observableArray([]);
             this.issuesCount        = ko.observable(0);
+            this.hiddenIssues       = ko.observable(0);
             self.options            = ko.observable();
             this.savingIssuesDetails= ko.observable(false);
             this.currentTime        = ko.observable(false);
@@ -308,12 +309,15 @@
                 var finalTasks = {};
                 finalTasks.issues = [];
 
+                var originalCount = issues.length;
+
                 for ( var i in issues ) {
                     if ( filterIssues.indexOf(issues[i].status.name) === -1 ) {
                         finalTasks.issues.push(issues[i]);
                     }
                 }
 
+                this.hiddenIssues(originalCount - finalTasks.issues.length);
                 this.issuesCount(finalTasks.issues.length);
 
                 return finalTasks.issues;

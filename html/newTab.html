@@ -39,6 +39,7 @@
         <div class="col-xs-12">
             <strong><small>Issues assigned:</small></strong>
             <strong><small data-bind="text: issuesCount"></small></strong>
+            <i data-bind="visible: hiddenIssues()">( +<span data-bind="text: hiddenIssues()"></span> are hidden )</i>
         </div>
     </div>
     <div class="col-xs-7">
