@@ -26,7 +26,8 @@
         <h1 data-bind="text: title, click: redirectToHome" class="col-xs-12"></h1>
     </div>
     <div class="col-xs-7 text-right">
-        <h2 data-bind="text: currentTime, visible: showTime"></h2>
+        <h2 class="pull-right" data-bind="text: currentTime, visible: showTime"></h2>
+        <img data-bind="visible: refreshingStatus" src="../res/loading.gif" alt="loading" style="position: relative;height: 30px;top: 21px;" class="pull-left">
     </div>
 </div>
 
@@ -69,11 +70,6 @@
     </div>
 </div>
 
-<div class="row">
-    <div data-bind="if: refreshingStatus" class="label label-primary col-xs-12 text-center">
-        <i data-bind="text: refreshingData"></i>
-    </div>
-</div>
 <hr>
 <div class="row">
     <div class="form-horizontal col-xs-6" data-bind="visible: haveIssues">
