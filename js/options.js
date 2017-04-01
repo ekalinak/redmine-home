@@ -31,7 +31,8 @@
                 myAccountLink		: '#myAccountLink',
 				showTime			: '#showTime',
                 filterStatusFlag 	: '#filterStatusFlag',
-				filterStatus		: '#filterStatus'
+				filterStatus		: '#filterStatus',
+				useTodos			: '#useTodos'
 			},
 
 			optionsToLocalSave : [
@@ -40,7 +41,8 @@
 				'issuesUpdateInterval',
 				'theme',
 				'filterStatusFlag',
-				'filterStatus'
+				'filterStatus',
+				'useTodos'
 			],
 
 			init : function(){
@@ -123,6 +125,7 @@
             	localStorage.removeItem('issuesLastUpdated');
             	localStorage.removeItem('projectsData');
             	localStorage.removeItem('redmineIssues');
+            	localStorage.removeItem('useTodos');
 			},
 
 			parseProjects : function(){

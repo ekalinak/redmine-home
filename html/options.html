@@ -1,230 +1,241 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Options - Redmine home</title>
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../css/custom.css" />
+	<title>Options - Redmine home</title>
+	<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../css/custom.css" />
 
-    <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="../bower_components/bootstrap/js/tooltip.js"></script>
-    <!--script type="text/javascript" src="../js/knockout-3.4.0.debug.js"></script-->
-    <script type="text/javascript" src="../js/knockout-3.4.0.js"></script>
-    <script type="text/javascript" src="../js/options.js"></script>
+	<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="../bower_components/bootstrap/js/tooltip.js"></script>
+	<!--script type="text/javascript" src="../js/knockout-3.4.0.debug.js"></script-->
+	<script type="text/javascript" src="../js/knockout-3.4.0.js"></script>
+	<script type="text/javascript" src="../js/options.js"></script>
 </head>
 <body class="container">
 
 <div class="row">
-    <h1 data-bind="text: optionsPageTitle"></h1>
+	<h1 data-bind="text: optionsPageTitle"></h1>
 </div>
 
 <div data-bind="visible: optionsSaved" class="alert alert-success" >
-    <span class="glyphicon glyphicon-ok-circle"></span>
-    <span data-bind="text: optionsSavedMessage"></span>
+	<span class="glyphicon glyphicon-ok-circle"></span>
+	<span data-bind="text: optionsSavedMessage"></span>
 </div>
 
 <br>
 <div class="form-horizontal row">
-    <fieldset>
-        <legend>Basic ( required ) setup</legend>
-        <div class="form-group">
-            <label for="redmineLink" class="control-label col-xs-3"
-                   data-placement="right" title="URL of the Redmine system."
-                   data-toggle="tooltip">Redmine URL</label>
-            <div class="col-xs-8">
-                <input type="text"
-                       id="redmineLink"
-                       name="redmine_link"
-                       class="form-control"
-                       placeholder="Please input link in format '[protocol][URL]/' ( so i.e. :  'https://redmine.com/' - notice slash at the end )"
-                />
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="redmineApiKey" class="control-label col-xs-3"
-                   data-placement="right" title="Your Redmine API key. ( You can find your API key in 'My Account' section right column. ( There you find 'API access key' and 'Show' link. Click on it and you will see the API key ..."
-                   data-toggle="tooltip" >Redmine API key</label>
-            <div class="col-xs-8">
-                <input type="password" id="redmineApiKey" name="redmine_api_key" class="form-control" />
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Additional configuration</legend>
-        <div class="form-group">
-            <label for="updateTime" class="control-label col-xs-3"
-                   data-placement="right" title="Set after how much time ( in minutes ) should be data about issues updated."
-                   data-toggle="tooltip" >Update time</label>
-            <div class="col-lg-8 col-xs-7">
-                <input type="text" id="updateTime" name="update_time" class="form-control" />
-            </div>
-            <i class="control-label col-xs-2 col-lg-1">( min )</i>
-        </div>
-        <div class="form-group">
-            <label for="openIssuesNewTab" class="control-label col-xs-3"
-                   data-placement="right" title="Select 'Yes' if you want to open all the links in new tab."
-                   data-toggle="tooltip">Open issues on new tab ?</label>
-            <div class="col-xs-8">
-                <select id="openIssuesNewTab" name="open_issues_new_tab" class="form-control" >
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="filterStatusFlag" class="control-label col-xs-3"
-                   data-placement="right" title="Select 'Yes' if you want to spefify which statuses should not be displayed."
-                   data-toggle="tooltip">Filter tasks based on status ?</label>
-            <div class="col-xs-8">
-                <select id="filterStatusFlag" name="use_custom_status"
-                        class="form-control" data-bind="event: {change : manageCustomStatus}">
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group" data-bind="visible: filterStatusFlag">
-            <label for="filterStatus" class="control-label col-xs-3"
-                   data-placement="right" title="Tasks which will have those statuses will not be displayed in redmine home."
-                   data-toggle="tooltip">Which statuses should be removed.</label>
-            <div class="col-xs-8">
-                <input type="text" id="filterStatus" name="filter_status" class="form-control" disabled />
-                <span data-bind="foreach: issueStatuses">
-                    <button class="btn btn-sm top-buffer-5"
-                            data-bind="text: name, click: $parent.switchStatus, css: { 'btn-danger': selected, 'btn-success': !selected }"
-                            data-placement="bottom" data-toggle="tooltip" title="Green = visible; Red = not visible"></button>
-                </span>
-
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Visual configuration</legend>
-        <div class="form-group">
-            <label for="issueDetailEnabled" class="control-label col-xs-3"
-                   data-placement="right" title="If you select 'Yes' you will be able to display issue description, attachments & comments"
-                   data-toggle="tooltip">Enable issue detail ? ( beta )</label>
-            <div class="col-xs-8">
-                <select id="issueDetailEnabled" name="issue_detail_enabled" class="form-control" >
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="myAccountLink" class="control-label col-xs-3"
-                   data-placement="right" title="If enabled, it will show button to 'My Account' section in Redmine system."
-                   data-toggle="tooltip">Show link to My Account</label>
-            <div class="col-xs-8">
-                <select id="myAccountLink" name="my_account_link" class="form-control" >
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="showTime" class="control-label col-xs-3"
-                   data-placement="right" title="If enabled shows the current time in the top. ( You can choose if you want to display time with seconds or without )"
-                   data-toggle="tooltip">Show time</label>
-            <div class="col-xs-8">
-                <select id="showTime" name="show_time" class="form-control" >
-                    <option value="0">No</option>
-                    <option value="1">Yes - without seconds</option>
-                    <option value="2">Yes - with seconds</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="theme" class="control-label col-xs-3"
-                   data-placement="right" title="Few bootstrap themes are included. For better orientation, dark themes are marked."
-                   data-toggle="tooltip">Theme</label>
-            <div class="col-xs-8">
-                <select name="theme" id="theme" class="form-control">
-                    <option value="none">None ( use native Bootstrap )</option>
-                    <option value="cerulean">Cerulean</option>
-                    <option value="cosmo">Cosmo</option>
-                    <option value="cyborg">Cyborg ( dark )</option>
-                    <option value="darkly">Darky ( dark )</option>
-                    <option value="flatly">Flatly</option>
-                    <option value="journal">Journal</option>
-                    <option value="lumen">Lumen</option>
-                    <option value="paper">Paper</option>
-                    <option value="sandstone">Sandstone</option>
-                    <option value="readable">Readable</option>
-                    <option value="simplex">simplex</option>
-                    <option value="slate">Slate ( dark )</option>
-                    <option value="spacelab">Spacelab</option>
-                    <option value="superhero">Superhero ( dark )</option>
-                    <option value="united">United</option>
-                    <option value="yeti">Yeti</option>
-                </select>
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Save options</legend>
-        <div class="row">
-            <div class="col-xs-12 text-center">
-                <button type="submit"
-                        data-bind="click: saveOptions"
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                        title="Save options to Google sync storage. Some of the options will be also saved to local storage."
-                        class="btn btn-success col-xs-offset-3 col-xs-8 btn-lg">
-                    <span class="glyphicon glyphicon-floppy-disk"></span>
-                    <span data-bind="text: saveOptionsLabel"></span>
-                </button>
-            </div>
-        </div>
-    </fieldset>
-    <fieldset class="top-buffer">
-        <legend>Project data retrieve ( Omnibox functionality )</legend>
-        <div class="form-group">
-            <label for="projectStatus" class="control-label col-xs-3"
-                   data-placement="right" title="By clicking on this button you will download all projects assigned to you locally. Locally parsed projects are required for omnibox to work correctly."
-                   data-toggle="tooltip">Parse projects locally</label>
-            <div class="col-xs-8">
-                <div class="btn btn-sm col-xs-12" id="projectStatus"
-                     data-bind="click: parseProjects, css: getProjectStyle()">
-                   <span data-bind="text: projectLabel"></span>
-                </div>
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Data clear</legend>
-        <div class="form-group">
-            <label for="resetGoogleData" class="control-label col-xs-3"
-                   data-placement="right" title="All data which are stored to chrome sync storage will be removed."
-                   data-toggle="tooltip">Remove Chrome sync storage</label>
-            <div class="col-xs-8">
-                <button type="submit" data-bind="click: resetOptions"
-                        class="btn btn-danger        btn-sm col-xs-12"
-                        id="resetGoogleData">
-                    <span class="glyphicon glyphicon-trash"></span>
-                    <span data-bind="text: resetOptionsLabel"></span>
-                </button>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="removeLocalData" class="control-label col-xs-3"
-                   data-placement="right" title="All data, which were saved to local storage will be removed. After this action you have to configure extension again."
-                   data-toggle="tooltip">Remove all localy saved data.</label>
-            <div class="col-xs-8">
-                <button type="submit" data-bind="click: resetLocalOptions" class="btn btn-sm btn-danger col-xs-12" id="removeLocalData">
-                    <span class="glyphicon glyphicon-floppy-remove"></span>&nbsp;&nbsp;
-                    <span data-bind="text: resetLocalOptionsLabel"></span>
-                </button>
-            </div>
-        </div>
-    </fieldset>
+	<fieldset>
+		<legend>Basic ( required ) setup</legend>
+		<div class="form-group">
+			<label for="redmineLink" class="control-label col-xs-3"
+				   data-placement="right" title="URL of the Redmine system."
+				   data-toggle="tooltip">Redmine URL</label>
+			<div class="col-xs-8">
+				<input type="text"
+					   id="redmineLink"
+					   name="redmine_link"
+					   class="form-control"
+					   placeholder="Please input link in format '[protocol][URL]/' ( so i.e. :  'https://redmine.com/' - notice slash at the end )"
+				/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="redmineApiKey" class="control-label col-xs-3"
+				   data-placement="right" title="Your Redmine API key. ( You can find your API key in 'My Account' section right column. ( There you find 'API access key' and 'Show' link. Click on it and you will see the API key ..."
+				   data-toggle="tooltip" >Redmine API key</label>
+			<div class="col-xs-8">
+				<input type="password" id="redmineApiKey" name="redmine_api_key" class="form-control" />
+			</div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>Additional configuration</legend>
+		<div class="form-group">
+			<label for="updateTime" class="control-label col-xs-3"
+				   data-placement="right" title="Set after how much time ( in minutes ) should be data about issues updated."
+				   data-toggle="tooltip" >Update time</label>
+			<div class="col-lg-8 col-xs-7">
+				<input type="text" id="updateTime" name="update_time" class="form-control" />
+			</div>
+			<i class="control-label col-xs-2 col-lg-1">( min )</i>
+		</div>
+		<div class="form-group">
+			<label for="openIssuesNewTab" class="control-label col-xs-3"
+				   data-placement="right" title="Select 'Yes' if you want to open all the links in new tab."
+				   data-toggle="tooltip">Open issues on new tab ?</label>
+			<div class="col-xs-8">
+				<select id="openIssuesNewTab" name="open_issues_new_tab" class="form-control" >
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="filterStatusFlag" class="control-label col-xs-3"
+				   data-placement="right" title="Select 'Yes' if you want to spefify which statuses should not be displayed."
+				   data-toggle="tooltip">Filter tasks based on status ?</label>
+			<div class="col-xs-8">
+				<select id="filterStatusFlag" name="use_custom_status"
+						class="form-control" data-bind="event: {change : manageCustomStatus}">
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group" data-bind="visible: filterStatusFlag">
+			<label for="filterStatus" class="control-label col-xs-3"
+				   data-placement="right" title="Tasks which will have those statuses will not be displayed in redmine home."
+				   data-toggle="tooltip">Which statuses should be removed.</label>
+			<div class="col-xs-8">
+				<input type="text" id="filterStatus" name="filter_status" class="form-control" disabled />
+				<span data-bind="foreach: issueStatuses">
+					<button class="btn btn-sm top-buffer-5"
+							data-bind="text: name, click: $parent.switchStatus, css: { 'btn-danger': selected, 'btn-success': !selected }"
+							data-placement="bottom" data-toggle="tooltip" title="Green = visible; Red = not visible"></button>
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="useTodos" class="control-label col-xs-3"
+				   data-placement="right" title="Select 'Yes' if you want to spefify which statuses should not be displayed."
+				   data-toggle="tooltip">Use TODOs ?</label>
+			<div class="col-xs-8">
+				<select id="useTodos" name="use_todos"
+						class="form-control" data-bind="event: {change : manageCustomStatus}">
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</select>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>Visual configuration</legend>
+		<div class="form-group">
+			<label for="issueDetailEnabled" class="control-label col-xs-3"
+				   data-placement="right" title="If you select 'Yes' you will be able to display issue description, attachments & comments"
+				   data-toggle="tooltip">Enable issue detail ? ( beta )</label>
+			<div class="col-xs-8">
+				<select id="issueDetailEnabled" name="issue_detail_enabled" class="form-control" >
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="myAccountLink" class="control-label col-xs-3"
+				   data-placement="right" title="If enabled, it will show button to 'My Account' section in Redmine system."
+				   data-toggle="tooltip">Show link to My Account</label>
+			<div class="col-xs-8">
+				<select id="myAccountLink" name="my_account_link" class="form-control" >
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="showTime" class="control-label col-xs-3"
+				   data-placement="right" title="If enabled shows the current time in the top. ( You can choose if you want to display time with seconds or without )"
+				   data-toggle="tooltip">Show time</label>
+			<div class="col-xs-8">
+				<select id="showTime" name="show_time" class="form-control" >
+					<option value="0">No</option>
+					<option value="1">Yes - without seconds</option>
+					<option value="2">Yes - with seconds</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="theme" class="control-label col-xs-3"
+				   data-placement="right" title="Few bootstrap themes are included. For better orientation, dark themes are marked."
+				   data-toggle="tooltip">Theme</label>
+			<div class="col-xs-8">
+				<select name="theme" id="theme" class="form-control">
+					<option value="none">None ( use native Bootstrap )</option>
+					<option value="cerulean">Cerulean</option>
+					<option value="cosmo">Cosmo</option>
+					<option value="cyborg">Cyborg ( dark )</option>
+					<option value="darkly">Darky ( dark )</option>
+					<option value="flatly">Flatly</option>
+					<option value="journal">Journal</option>
+					<option value="lumen">Lumen</option>
+					<option value="paper">Paper</option>
+					<option value="sandstone">Sandstone</option>
+					<option value="readable">Readable</option>
+					<option value="simplex">simplex</option>
+					<option value="slate">Slate ( dark )</option>
+					<option value="spacelab">Spacelab</option>
+					<option value="superhero">Superhero ( dark )</option>
+					<option value="united">United</option>
+					<option value="yeti">Yeti</option>
+				</select>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>Save options</legend>
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<button type="submit"
+						data-bind="click: saveOptions"
+						data-toggle="tooltip"
+						data-placement="bottom"
+						title="Save options to Google sync storage. Some of the options will be also saved to local storage."
+						class="btn btn-success col-xs-offset-3 col-xs-8 btn-lg">
+					<span class="glyphicon glyphicon-floppy-disk"></span>
+					<span data-bind="text: saveOptionsLabel"></span>
+				</button>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset class="top-buffer">
+		<legend>Project data retrieve ( Omnibox functionality )</legend>
+		<div class="form-group">
+			<label for="projectStatus" class="control-label col-xs-3"
+				   data-placement="right" title="By clicking on this button you will download all projects assigned to you locally. Locally parsed projects are required for omnibox to work correctly."
+				   data-toggle="tooltip">Parse projects locally</label>
+			<div class="col-xs-8">
+				<div class="btn btn-sm col-xs-12" id="projectStatus"
+					 data-bind="click: parseProjects, css: getProjectStyle()">
+				   <span data-bind="text: projectLabel"></span>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>Data clear</legend>
+		<div class="form-group">
+			<label for="resetGoogleData" class="control-label col-xs-3"
+				   data-placement="right" title="All data which are stored to chrome sync storage will be removed."
+				   data-toggle="tooltip">Remove Chrome sync storage</label>
+			<div class="col-xs-8">
+				<button type="submit" data-bind="click: resetOptions"
+						class="btn btn-danger        btn-sm col-xs-12"
+						id="resetGoogleData">
+					<span class="glyphicon glyphicon-trash"></span>
+					<span data-bind="text: resetOptionsLabel"></span>
+				</button>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="removeLocalData" class="control-label col-xs-3"
+				   data-placement="right" title="All data, which were saved to local storage will be removed. After this action you have to configure extension again."
+				   data-toggle="tooltip">Remove all localy saved data.</label>
+			<div class="col-xs-8">
+				<button type="submit" data-bind="click: resetLocalOptions" class="btn btn-sm btn-danger col-xs-12" id="removeLocalData">
+					<span class="glyphicon glyphicon-floppy-remove"></span>&nbsp;&nbsp;
+					<span data-bind="text: resetLocalOptionsLabel"></span>
+				</button>
+			</div>
+		</div>
+	</fieldset>
 </div>
 
 <hr class="row">
 <div class="row">
-    <a href="newTab.html" class="btn btn-default">
-        <span class="glyphicon glyphicon-arrow-left"></span>
-        <span data-bind="text: labelBackNewTab"></span>
-    </a>
+	<a href="newTab.html" class="btn btn-default">
+		<span class="glyphicon glyphicon-arrow-left"></span>
+		<span data-bind="text: labelBackNewTab"></span>
+	</a>
 </div>
 <div class="row">&nbsp;</div>
 </body>
