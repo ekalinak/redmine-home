@@ -305,6 +305,10 @@
             };
 
             this.filterIssues = function( issues ){
+                if ( !parseInt(localStorage.getItem('filterStatusFlag')) ) {
+                    return issues;
+                }
+
                 var filterIssues = localStorage.getItem('filterStatus').split(',');
                 var finalTasks = {};
                 finalTasks.issues = [];
