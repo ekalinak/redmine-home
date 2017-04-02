@@ -71,10 +71,22 @@
         <div class="row">
             <div class="col-xs-4" data-bind="visible: showTodos">
                 <div class="row">
-                    <h1 for="notes">Notes: </h1>
+                    <h2 class="col-xs-8" for="notes" data-bind="visible: minimizeTodos">Notes: </h2>
+                    <h4 class="col-xs-4">
+                        <button id="toggleNotes" 
+                                class="btn btn-primary pull-right col-xs-12" 
+                                title="Toggle minimize notes" 
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                data-bind="click: toggleNotes">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                        </button>
+                    </h4>
                 </div>
-                <div class="row">
-                    <textarea id="notes" class="col-xs-12" rows="15" data-bind="event: {focusout: saveNotes}"></textarea>
+                <div class="row" data-bind="visible: minimizeTodos">
+                    <div class="col-xs-12">
+                        <textarea id="notes" class="form-control" rows="15" data-bind="event: {focusout: saveNotes}"></textarea>
+                    </div>
                 </div>
             </div>
             <div data-bind="css: mainColumnWidth">

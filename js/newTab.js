@@ -37,6 +37,7 @@
             this.showMyAccount      = ko.observable(false);
             this.showMyIssues       = ko.observable(false);
             this.showTodos          = ko.observable(false);
+            this.minimizeTodos      = ko.observable(true);
             this.mainColumnWidth    = ko.observable('col-xs-12');
             self.openedIssue        = ko.observable({
                 name: 'init',
@@ -800,8 +801,20 @@
                 var savedNotes = localStorage.getItem('savedNotes');
                 document.getElementById('notes').value = savedNotes;
             };
+
+            this.toggleNotes = function(){
+                var currentState = this.minimizeTodos();
+                if ( currentState ) { 
+                    this.minimizeTodos(false);
+                    this.handleMainColumnWidth(true);
+                } else {
+                    this.minimizeTodos(true);
+                    this.handleMainColumnWidth(false);
+                }
+            };
 		};
 		ko.applyBindings(new newTabViewModel().init());
+        $('[data-toggle="tooltip"]').tooltip();
         // $('[data-toggle="popover"]').popover({html: true});
 	});
 })(jQuery);
