@@ -61,10 +61,21 @@
                 <span>Go to "My Account"</span>
                 </button>
                 <span class="pull-right">&nbsp;</span>
+                <button id="toggleNotes"
+                        class="btn btn-sm btn-primary pull-right"
+                        title="Toggle minimize notes"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        data-bind="click: toggleNotes, visible: showTodos">
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                    Notes
+                </button>
+                <span class="pull-right">&nbsp;</span>
                 <a href="http://www.google.com" class="btn btn-primary pull-right btn-sm">
                     <span class="glyphicon glyphicon-search"></span>
                     <span data-bind="text:googleCom"></span>
                 </a>
+
             </div>
         </div>
         <hr>
@@ -73,14 +84,7 @@
                 <div class="row">
                     <h2 class="col-xs-8" for="notes" data-bind="visible: minimizeTodos">Notes: </h2>
                     <h4 class="col-xs-4">
-                        <button id="toggleNotes" 
-                                class="btn btn-primary pull-right col-xs-12" 
-                                title="Toggle minimize notes" 
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                data-bind="click: toggleNotes">
-                            <span class="glyphicon glyphicon-list-alt"></span>
-                        </button>
+
                     </h4>
                 </div>
                 <div class="row" data-bind="visible: minimizeTodos">

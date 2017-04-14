@@ -777,6 +777,10 @@
                     this.showTodos(true);
                     this.loadNotes();
                     this.handleMainColumnWidth(false);
+                    if ( parseInt(localStorage.getItem('minimizedNotes')) ) {
+                        this.minimizeTodos(false);
+                        this.handleMainColumnWidth();
+                    }
                 }
             };
 
@@ -804,10 +808,12 @@
 
             this.toggleNotes = function(){
                 var currentState = this.minimizeTodos();
-                if ( currentState ) { 
+                if ( currentState ) {
+                    localStorage.setItem('minimizedNotes',1);
                     this.minimizeTodos(false);
                     this.handleMainColumnWidth(true);
                 } else {
+                    localStorage.setItem('minimizedNotes',0);
                     this.minimizeTodos(true);
                     this.handleMainColumnWidth(false);
                 }
