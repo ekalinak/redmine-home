@@ -1,162 +1,180 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Redmine home</title>
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../css/custom.css" />
-
-    <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="../bower_components/bootstrap/js/tooltip.js"></script>
-    <script type="text/javascript" src="../bower_components/bootstrap/js/popover.js"></script>
-    <!--<script type="text/javascript" src="../js/knockout-3.4.0.debug.js"></script>-->
-    <script type="text/javascript" src="../js/knockout-3.4.0.js"></script>
-    <script type="text/javascript" src="../js/newTab.js"></script>
-    <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/textile.js"></script>
-    <style>
+    <head>
+        <title>Redmine home</title>
+        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="../css/custom.css" />
+        <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../bower_components/bootstrap/js/tooltip.js"></script>
+        <script type="text/javascript" src="../bower_components/bootstrap/js/popover.js"></script>
+        <!--<script type="text/javascript" src="../js/knockout-3.4.0.debug.js"></script>-->
+        <script type="text/javascript" src="../js/knockout-3.4.0.js"></script>
+        <script type="text/javascript" src="../js/newTab.js"></script>
+        <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../js/textile.js"></script>
+        <style>
         * {
-            transition: display 2s;
+        transition: display 2s;
         }
-    </style>
-</head>
-<body class="container">
-<span id="top"></span>
-<div class="row ">
-    <div class="col-xs-5">
-        <h1 data-bind="text: title, click: redirectToHome" class="col-xs-12"></h1>
-    </div>
-    <div class="col-xs-7 text-right">
-        <h2 class="pull-right" data-bind="text: currentTime, visible: showTime"></h2>
-        <img data-bind="visible: refreshingStatus" src="../res/loading.gif" alt="loading" style="position: relative;height: 30px;top: 21px;" class="pull-left">
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-5">
-        <div class="col-xs-12" data-bind="if: lastIssuesUpdate">
-            <strong> <small>Issues last updated :</small> </strong>
-            <strong><small data-bind="text: lastIssuesUpdate"></small></strong>
-        </div>
-        <div class="col-xs-12">
-            <strong><small>Issues assigned:</small></strong>
-            <strong><small data-bind="text: issuesCount"></small></strong>
-            <i data-bind="visible: hiddenIssues()">( +<span data-bind="text: hiddenIssues()"></span> are hidden )</i>
-        </div>
-    </div>
-    <div class="col-xs-7">
-        <button class="btn btn-sm btn-default pull-right" data-toggle="modal" data-target="#infoModal">
-            <span class="glyphicon glyphicon-info-sign"></span>
-        </button>
-        <span class="pull-right">&nbsp;</span>
-        <a href="options.html" class="btn btn-warning pull-right btn-sm">
-            <span class="glyphicon glyphicon-cog"></span>
-            <span data-bind="text:optionsPageLabel"></span>
-        </a>
-        <span data-bind="visible: showMyIssues" class="pull-right">&nbsp;</span>
-        <button data-bind="click: goToAssignedIssues, visible: showMyIssues" class="btn btn-default btn-sm pull-right">
-            <span class="glyphicon glyphicon-list"></span>
-            <span>Go to my issues</span>
-        </button>
-        <span class="pull-right" data-bind="visible: showMyAccount">&nbsp;</span>
-        <button class="btn btn-default btn-sm pull-right" data-bind="click: goToMyAccount, visible: showMyAccount">
-            <span class="glyphicon glyphicon-user"></span>
-            <span>Go to "My Account"</span>
-        </button>
-        <span class="pull-right">&nbsp;</span>
-        <a href="http://www.google.com" class="btn btn-primary pull-right btn-sm">
-            <span class="glyphicon glyphicon-search"></span>
-            <span data-bind="text:googleCom"></span>
-        </a>
-    </div>
-</div>
-
-<hr>
-<div class="row">
-    <div class="form-horizontal col-xs-6" data-bind="visible: haveIssues">
-        <div class="form-group" data-bind="visible: searchVisible">
+        </style>
+    </head>
+    <body class="container">
+        <span id="top"></span>
+        <div class="row ">
             <div class="col-xs-5">
-                <input type="text" data-bind="event: {keyup: $root.searchInIssues}" id="issuesSearch" 
-                class="form-control"
-                placeholder="Search in issues" />
+                <h1 data-bind="text: title, click: redirectToHome" class="col-xs-12"></h1>
             </div>
-            <button class="btn btn-danger" data-bind="visible: searchActive, click: clearSearch($data)">
-                <span class="glyphicon glyphicon-eye-close"></span>
-            </button>
-        </div>
-    </div>
-    <form class="col-xs-6 form-horizontal">
-        <div class="form-group">
-            <button class="btn btn-primary col-xs-2 pull-right" data-bind="click: goToIssue" >
-                <span class="glyphicon glyphicon-circle-arrow-right"></span>
-            </button>
-            <div class="col-xs-4 pull-right">
-                <input type="text" name="goToIssue" class="form-control" id="goToIssue" placeholder="Issue nr.">
+            <div class="col-xs-7 text-right">
+                <h2 class="pull-right" data-bind="text: currentTime, visible: showTime"></h2>
+                <img data-bind="visible: refreshingStatus" src="../res/loading.gif" alt="loading" style="position: relative;height: 30px;top: 21px;" class="pull-left">
             </div>
-            <label for="goToIssue" class="control-label col-xs-3 pull-right">Open issue</label>
         </div>
-        
-        
+        <div class="row">
+            <div class="col-xs-5">
+                <div class="col-xs-12" data-bind="if: lastIssuesUpdate">
+                    <strong> <small>Issues last updated :</small> </strong>
+                    <strong><small data-bind="text: lastIssuesUpdate"></small></strong>
+                </div>
+                <div class="col-xs-12">
+                    <strong><small>Issues assigned:</small></strong>
+                    <strong><small data-bind="text: issuesCount"></small></strong>
+                    <i data-bind="visible: hiddenIssues()">( +<span data-bind="text: hiddenIssues()"></span> are hidden )</i>
+                </div>
+            </div>
+            <div class="col-xs-7">
+                <button class="btn btn-sm btn-default pull-right" data-toggle="modal" data-target="#infoModal">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                </button>
+                <span class="pull-right">&nbsp;</span>
+                <a href="options.html" class="btn btn-warning pull-right btn-sm">
+                    <span class="glyphicon glyphicon-cog"></span>
+                    <span data-bind="text:optionsPageLabel"></span>
+                </a>
+                <span data-bind="visible: showMyIssues" class="pull-right">&nbsp;</span>
+                <button data-bind="click: goToAssignedIssues, visible: showMyIssues" class="btn btn-default btn-sm pull-right">
+                <span class="glyphicon glyphicon-list"></span>
+                <span>Go to my issues</span>
+                </button>
+                <span class="pull-right" data-bind="visible: showMyAccount">&nbsp;</span>
+                <button class="btn btn-default btn-sm pull-right" data-bind="click: goToMyAccount, visible: showMyAccount">
+                <span class="glyphicon glyphicon-user"></span>
+                <span>Go to "My Account"</span>
+                </button>
+                <span class="pull-right">&nbsp;</span>
+                <a href="http://www.google.com" class="btn btn-primary pull-right btn-sm">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <span data-bind="text:googleCom"></span>
+                </a>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-4" data-bind="visible: showTodos">
+                <div class="row">
+                    <h2 class="col-xs-8" for="notes" data-bind="visible: minimizeTodos">Notes: </h2>
+                    <h4 class="col-xs-4">
+                        <button id="toggleNotes" 
+                                class="btn btn-primary pull-right col-xs-12" 
+                                title="Toggle minimize notes" 
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                data-bind="click: toggleNotes">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                        </button>
+                    </h4>
+                </div>
+                <div class="row" data-bind="visible: minimizeTodos">
+                    <div class="col-xs-12">
+                        <textarea id="notes" class="form-control" rows="15" data-bind="event: {focusout: saveNotes}"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div data-bind="css: mainColumnWidth">
+                <div class="row">
+                    <div class="form-horizontal col-xs-6" data-bind="visible: haveIssues">
+                        <div class="form-group" data-bind="visible: searchVisible">
+                            <div class="col-xs-5">
+                                <input type="text" data-bind="event: {keyup: $root.searchInIssues}" id="issuesSearch"
+                                class="form-control"
+                                placeholder="Search in issues" />
+                            </div>
+                            <button class="btn btn-danger" data-bind="visible: searchActive, click: clearSearch($data)">
+                            <span class="glyphicon glyphicon-eye-close"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <form class="col-xs-6 form-horizontal">
+                        <div class="form-group">
+                            <button class="btn btn-primary col-xs-2 pull-right" data-bind="click: goToIssue" >
+                            <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                            </button>
+                            <div class="col-xs-4 pull-right">
+                                <input type="text" name="goToIssue" class="form-control" id="goToIssue" placeholder="Issue nr.">
+                            </div>
+                            <label for="goToIssue" class="control-label col-xs-3 pull-right">Open issue</label>
+                        </div>
+                    </form>
+                </div><div class="row">
+                <table data-bind="visible: issueTableVisible" class="table table-hover">
+                    <thead>
+                        <tr data-bind="foreach: columns">
+                            <th data-bind="click: $parent.sortColumn(property, event)" style="cursor: pointer" class="text-center">
+                                <span data-bind="text: label"></span>
+                                <span data-bind="attr: {class : $parent.sortColumnIcon(property)}"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: issues">
+                        <tr>
+                            <td class="text-center">
+                                <a href="" data-bind="text: id, click: $parent.redirectToIssue"></a>
+                            </td>
+                            <td class="text-center">
+                                <span data-bind="css: $parent.getIssueLabel($data), text: priority.name"></span>
+                            </td>
+                            <td data-bind="text: subject"></td>
+                            <td class="text-center">
+                                <span data-bind="text: project.name, click: $parent.initPopover($data, event)"
+                                    data-toggle="popover"
+                                    data-placement="bottom"
+                                    data-trigger="focus"
+                                    role="button"
+                                    tabindex="0"
+                                    class="project-info-button"
+                                style="cursor: pointer;"></span>
+                            </td>
+                            <td data-bind="text: tracker.name" class="text-center"></td>
+                            <td data-bind="click: $parent.openIssue, visible: $parent.enabledIssueDetail()">
+                                <button class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
-
-<table data-bind="visible: issueTableVisible" class="table table-hover">
-    <thead>
-    <tr data-bind="foreach: columns">
-        <th data-bind="click: $parent.sortColumn(property, event)" style="cursor: pointer" class="text-center">
-            <span data-bind="text: label"></span>
-            <span data-bind="attr: {class : $parent.sortColumnIcon(property)}"></span>
-        </th>
-    </tr>
-    </thead>
-    <tbody data-bind="foreach: issues">
-    <tr>
-        <td class="text-center">
-            <a href="" data-bind="text: id, click: $parent.redirectToIssue"></a>
-        </td>
-        <td class="text-center">
-            <span data-bind="css: $parent.getIssueLabel($data), text: priority.name"></span>
-        </td>
-        <td data-bind="text: subject"></td>
-        <td class="text-center">
-            <span data-bind="text: project.name, click: $parent.initPopover($data, event)" 
-                  data-toggle="popover" 
-                  data-placement="bottom" 
-                  data-trigger="focus" 
-                  role="button"
-                  tabindex="0"
-                  class="project-info-button"
-                  style="cursor: pointer;"></span>
-        </td>
-        <td data-bind="text: tracker.name" class="text-center"></td>
-        <td data-bind="click: $parent.openIssue, visible: $parent.enabledIssueDetail()">
-            <button class="btn btn-primary btn-sm">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </button>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
 <div class="row text-center" data-bind="if : !issueDetailActive()">
     <i data-bind="if: !issueTableVisible()">No items found</i>
 </div>
-
 <!--Issue detail-->
 <div data-bind="visible: issueDetailActive">
     <div class="row">
         <h2 class="text-center" data-bind="visible: issueDetailLoading">
-            <span class="label label-default">Loading issue data ...</span>
+        <span class="label label-default">Loading issue data ...</span>
         </h2>
     </div>
     <div class="row" data-bind="visible: !issueDetailLoading()">
         <button class="btn btn-danger btn-sm pull-right" data-bind="click: closeIssueDetail">
-            <span class="glyphicon glyphicon-remove-circle"></span>
-            Close issue
+        <span class="glyphicon glyphicon-remove-circle"></span>
+        Close issue
         </button>
         <span class="pull-right">&nbsp;</span>
         <button class="btn btn-default btn-sm pull-right" data-bind="click: refreshIssueData">
-            <span class="glyphicon glyphicon-refresh"></span>
-            Refresh issue data
+        <span class="glyphicon glyphicon-refresh"></span>
+        Refresh issue data
         </button>
         <span class="pull-right">&nbsp;</span>
         <a class="btn btn-default btn-sm pull-right" href="#bottom">
@@ -188,16 +206,16 @@
     <hr>
     <table class="table table-striped" data-bind="visible: !issueDetailLoading()">
         <thead>
-        <tr>
-            <th>User</th>
-            <th>Note</th>
-        </tr>
+            <tr>
+                <th>User</th>
+                <th>Note</th>
+            </tr>
         </thead>
         <tbody data-bind="foreach: openedIssue().notes">
-        <tr>
-            <td><strong data-bind="text: author"></strong>:</td>
-            <td data-bind="html: note"></td>
-        </tr>
+            <tr>
+                <td><strong data-bind="text: author"></strong>:</td>
+                <td data-bind="html: note"></td>
+            </tr>
         </tbody>
     </table>
     <div class="row" data-bind="visible: !issueDetailLoading()">
@@ -208,7 +226,6 @@
     </div>
     <div class="row">&nbsp;</div>
 </div>
-
 <div class="row" data-bind="if: !issueDetailActive()">
     <div class="col-xs-7">
         <div class="progress" data-bind="visible: savingIssuesDetails">
@@ -219,23 +236,22 @@
     </div>
     <div class="col-xs-5">
         <button data-bind="visible: stableStatus, click: getIssues" class="btn btn-default pull-right" >
-            <span class="glyphicon glyphicon-refresh"></span>
-            <span data-bind="text: refreshStatus"></span>
+        <span class="glyphicon glyphicon-refresh"></span>
+        <span data-bind="text: refreshStatus"></span>
         </button>
         <span class="pull-right">&nbsp;</span>
         <button class="btn btn-default pull-right" data-bind="click: downloadAllIssuesLocally, visible: enabledIssueDetail">
-            <span class="glyphicon glyphicon-cloud-download"></span>
-            <span>Download issue details</span>
+        <span class="glyphicon glyphicon-cloud-download"></span>
+        <span>Download issue details</span>
         </button>
     </div>
 </div>
-
 <div id="infoModal" class="modal fade" role="dialog" aria-labelledby="aboutLabel">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                aria-hidden="true">&times;</span></button>
                 <h2 class="modalLabel text-center">Redmine home</h2>
             </div>
             <div class="modal-body text-center">

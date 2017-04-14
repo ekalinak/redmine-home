@@ -36,6 +36,9 @@
             this.issueDetailLoading = ko.observable(false);
             this.showMyAccount      = ko.observable(false);
             this.showMyIssues       = ko.observable(false);
+            this.showTodos          = ko.observable(false);
+            this.minimizeTodos      = ko.observable(true);
+            this.mainColumnWidth    = ko.observable('col-xs-12');
             self.openedIssue        = ko.observable({
                 name: 'init',
                 id : '',
@@ -55,10 +58,7 @@
                 var self = this;
                 var redmineIssues = this.getLocalIssues(true);
 
-                /*if ( !redmineIssues ) { // Data have to be downloaded from the remote server
-                    return this;
-                }*/
-
+                this.handleTodos();
 
                 // Fill stored issues
                 if ( redmineIssues && redmineIssues.length ) {
@@ -305,6 +305,10 @@
             };
 
             this.filterIssues = function( issues ){
+                if ( !parseInt(localStorage.getItem('filterStatusFlag')) ) {
+                    return issues;
+                }
+
                 var filterIssues = localStorage.getItem('filterStatus').split(',');
                 var finalTasks = {};
                 finalTasks.issues = [];
@@ -364,6 +368,8 @@
             self.openIssue = function(){
                 self.issueTableVisible(false);
                 self.issueDetailActive(true);
+                self.showTodos(false);
+                self.handleMainColumnWidth(true);
                 window.location.href = '#top';
                 self.searchVisible(false);
 
@@ -504,6 +510,8 @@
                 this.issueDetailActive(false);
                 this.issueTableVisible(true);
                 this.searchVisible(true);
+                // this.showTodos(true);
+                this.handleTodos();
             };
 
             /**
@@ -762,9 +770,51 @@
                 }
                 console.log('Not given a number');
                 return false;
-            }
+            };
+
+            this.handleTodos = function(){
+                if ( parseInt(localStorage.getItem('useTodos')) ) {
+                    this.showTodos(true);
+                    this.loadNotes();
+                    this.handleMainColumnWidth(false);
+                }
+            };
+
+            this.handleMainColumnWidth = function( full ){
+                var full = ( typeof(full) == 'undefined' ) ? true : full;
+                var className = ( full ) ? 'col-xs-12' : 'col-xs-8';
+                this.mainColumnWidth(className);
+
+            };
+
+            this.saveNotes = function(){
+                var notesElement = document.getElementById('notes');
+                if ( !notesElement ) {
+                    return false;
+                }
+
+                localStorage.setItem('savedNotes',notesElement.value);                
+                console.log('Saving notes ...');
+            };
+
+            this.loadNotes = function(){
+                var savedNotes = localStorage.getItem('savedNotes');
+                document.getElementById('notes').value = savedNotes;
+            };
+
+            this.toggleNotes = function(){
+                var currentState = this.minimizeTodos();
+                if ( currentState ) { 
+                    this.minimizeTodos(false);
+                    this.handleMainColumnWidth(true);
+                } else {
+                    this.minimizeTodos(true);
+                    this.handleMainColumnWidth(false);
+                }
+            };
 		};
 		ko.applyBindings(new newTabViewModel().init());
+        $('[data-toggle="tooltip"]').tooltip();
         // $('[data-toggle="popover"]').popover({html: true});
 	});
 })(jQuery);
