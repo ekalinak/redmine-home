@@ -1,9 +1,9 @@
-(function($){
-	$(document).ready(function(){
-		var newTabViewModel = function(){
+define(['jquery','knockoutLib','tooltip','theme-init','bootstrapLib'],function($, ko){
+
+        var newTabViewModel = function(){
             var self = this;
             // Titles, Labels & Texts
-			this.title                  = chrome.i18n.getMessage('mainHeader');
+            this.title                  = chrome.i18n.getMessage('mainHeader');
             this.optionsPageTitle       = chrome.i18n.getMessage('optionsPageTitle');
             this.originalSearchLabel    = chrome.i18n.getMessage('originalSearchLabel');
             this.optionsPageLabel       = chrome.i18n.getMessage('optionsPageLabel');
@@ -91,7 +91,7 @@
                 });
 
                 return this;
-			};
+            };
 
             /**
              * Function will render time value to template. ( also calls itself whenever
@@ -144,7 +144,7 @@
             /**
              * Retrieve issues from Redmine
              */
-			this.getIssues = function(){
+            this.getIssues = function(){
                 var self = this;
                 chrome.storage.sync.get('options',function(items){
                     self.options(items.options);
@@ -170,7 +170,7 @@
                         }
                     });
                 });
-			};
+            };
 
             /**
              * Update information when was issues updated last time.
@@ -178,7 +178,7 @@
              * @param lastUpdateTime
              * @param onlyOutput
              */
-			this.issuesUpdatedFlag = function(lastUpdateTime, onlyOutput){
+            this.issuesUpdatedFlag = function(lastUpdateTime, onlyOutput){
                 if ( lastUpdateTime ) {
                     var lu = new Date(parseInt(lastUpdateTime));
                     var minutes =  (lu.getMinutes() < 10) ? '0' + lu.getMinutes() : lu.getMinutes();
@@ -193,9 +193,9 @@
             /**
              * Opens issue in Redmine system
              */
-			self.redirectToIssue = function(){
+            self.redirectToIssue = function(){
                 window.open(self.options()['redmineUrl'] + 'issues/' + this.id,'_blank');
-			};
+            };
 
             this.redirectToHome = function(){
                 var url = this.options()['redmineUrl'];
@@ -213,9 +213,9 @@
              * @param eventData
              * @returns {boolean}
              */
-			this.searchInIssues = function(classReference,eventData){
-			    if ( typeof(eventData) == 'undefined' || typeof(eventData.currentTarget) == 'undefined') {
-			        return false;
+            this.searchInIssues = function(classReference,eventData){
+                if ( typeof(eventData) == 'undefined' || typeof(eventData.currentTarget) == 'undefined') {
+                    return false;
                 }
                 this.issueTableVisible(true);
                 var searchValue = eventData.currentTarget.value;
@@ -258,7 +258,7 @@
             /**
              * Clears search input
              */
-			this.clearSearch = function(){
+            this.clearSearch = function(){
                 $(this.searchInput).val('');
                 this.resetColumnIcons();
                 this.issues(this.getLocalIssues());
@@ -275,8 +275,8 @@
              * @param init true|false
              * @returns {*}
              */
-			this.getLocalIssues = function( init ){
-			    var localData = JSON.parse(localStorage.getItem('redmineIssues'));
+            this.getLocalIssues = function( init ){
+                var localData = JSON.parse(localStorage.getItem('redmineIssues'));
                 var date = new Date();
 
                 var issuesLastUpldated = localStorage.getItem('issuesLastUpdated');
@@ -289,7 +289,7 @@
                 }
 
                 if ( typeof(localData) != 'object' || !localData ){
-			        return false;
+                    return false;
                 }
 
                 if ( init ) {
@@ -818,15 +818,7 @@
                     this.handleMainColumnWidth(false);
                 }
             };
-		};
-		ko.applyBindings(new newTabViewModel().init());
-        $('[data-toggle="tooltip"]').tooltip();
-        // $('[data-toggle="popover"]').popover({html: true});
-	});
-})(jQuery);
+        };
+        ko.applyBindings(new newTabViewModel().init());
 
-// Theme config
-var theme = localStorage.getItem('theme');
-if ( theme && theme!='none') {
-    jQuery('head').append('<link rel="stylesheet" href="../css/themes/' + theme + '/bootstrap.min.css" />')
-}
+});
