@@ -9,8 +9,9 @@ requirejs.config({
 		textile: "textile",
 		theme : "theme-init",
 		tooltip: "tooltip-init",
-		knockout: "knockout-3.4.0"
+		knockout: "knockout-3.4.0",
+		notes: "modules/Notes"
 	}
 });
 
-require(['newTab'],function(nt){});
+require(['newTab'],function(){});

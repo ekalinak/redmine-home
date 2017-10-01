@@ -1,4 +1,7 @@
-define(['jquery','knockoutLib','tooltip','theme-init','bootstrapLib'],function($, ko){
+define(['jquery','knockoutLib','notes','tooltip','theme-init','bootstrapLib'],function($, ko, notes){
+
+
+        console.log(notes);
 
         var newTabViewModel = function(){
             var self = this;
@@ -45,6 +48,9 @@ define(['jquery','knockoutLib','tooltip','theme-init','bootstrapLib'],function($
                 description : '',
                 notes : {}
             });
+
+            // Modules
+            this.notes = notes.init();
 
             // Identifiers
             this.searchInput = '#issuesSearch';
@@ -806,18 +812,7 @@ define(['jquery','knockoutLib','tooltip','theme-init','bootstrapLib'],function($
                 document.getElementById('notes').value = savedNotes;
             };
 
-            this.toggleNotes = function(){
-                var currentState = this.minimizeTodos();
-                if ( currentState ) {
-                    localStorage.setItem('minimizedNotes',1);
-                    this.minimizeTodos(false);
-                    this.handleMainColumnWidth(true);
-                } else {
-                    localStorage.setItem('minimizedNotes',0);
-                    this.minimizeTodos(true);
-                    this.handleMainColumnWidth(false);
-                }
-            };
+
         };
         ko.applyBindings(new newTabViewModel().init());
 
