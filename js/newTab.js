@@ -1,8 +1,5 @@
 define(['jquery','knockoutLib','notes','tooltip','theme-init','bootstrapLib'],function($, ko, notes){
 
-
-        console.log(notes);
-
         var newTabViewModel = function(){
             var self = this;
             // Titles, Labels & Texts
@@ -50,7 +47,7 @@ define(['jquery','knockoutLib','notes','tooltip','theme-init','bootstrapLib'],fu
             });
 
             // Modules
-            this.notes = notes.init();
+            self.notes = notes.init();
 
             // Identifiers
             this.searchInput = '#issuesSearch';
@@ -781,7 +778,7 @@ define(['jquery','knockoutLib','notes','tooltip','theme-init','bootstrapLib'],fu
             this.handleTodos = function(){
                 if ( parseInt(localStorage.getItem('useTodos')) ) {
                     this.showTodos(true);
-                    this.loadNotes();
+                    this.notes.loadNotes();
                     this.handleMainColumnWidth(false);
                     if ( parseInt(localStorage.getItem('minimizedNotes')) ) {
                         this.minimizeTodos(false);
@@ -797,20 +794,9 @@ define(['jquery','knockoutLib','notes','tooltip','theme-init','bootstrapLib'],fu
 
             };
 
-            this.saveNotes = function(){
-                var notesElement = document.getElementById('notes');
-                if ( !notesElement ) {
-                    return false;
-                }
 
-                localStorage.setItem('savedNotes',notesElement.value);                
-                console.log('Saving notes ...');
-            };
 
-            this.loadNotes = function(){
-                var savedNotes = localStorage.getItem('savedNotes');
-                document.getElementById('notes').value = savedNotes;
-            };
+
 
 
         };

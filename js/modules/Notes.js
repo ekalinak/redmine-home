@@ -1,58 +1,34 @@
-define(['knockoutLib'],function(ko){
+define(['knockoutLib','jquery'],function(ko,$){
 	var Notes = function(){
+		var self;
+
+		// Constants
+		this.notesTextareaId 	= 'notes';
+		this.localStorageKey 	= 'savedNotes';
+		this.localStorageFlag 	= 'useNotes';
+
+		// Observables
 		this.showNotes 		= ko.observable(false);
 		this.minimizeNotes 	= ko.observable(false);
 
 		this.notesTextarea = '';
 
-		this.localStorageFlag 	= 'useNotes';
-		this.localStorageId 	= 'notes';
-
 		this.init = function(id){
 			if ( typeof(id) !== 'undefined' ) {
-				this.notesTextarea = id;
+				this.notesTextareaId = id;
 			} 
 
 			if ( localStorage.getItem(this.localStorageFlag) ) {
 				this.showNotes = true;
 			}
+			
+			$('#' + this.notesTextareaId).on('focusout', this.saveNotes);
+
+			self = this;
 
 			return this;
 		}
 
-		this.canUseLocalstorage = function(){
-			return ( typeof(localStorage) !== 'undefined' ) ;
-		}
-
-		this.getNotes = function(){
-			if ( !this.canUseLocalstorage || !localStorage.getItem(this.localStorageFlag) ) {
-				return '';
-			}
-
-			return localStorage.getItem(this.localStorageId);
-		}
-
-		this.setNotes = function(){
-			var elem = document.getElementById(this.notesTextarea);
-			if ( !elem ) {
-				return false;
-			}
-
-			localStorage.setItem(this.localStorageId, elem.value);
-		}
-
-		this.setOptionEnabled = function( enabled ){
-			var enabled = ( typeof(enabled) === 'undefined' ) ? true : enabled;
-			this.showNotes = enabled;
-		}
-
-		this.setOptionMinimized = function( minimized ){
-			var minimized = ( typeof(minimized) === 'undefined' ) ? false : minimized;
-			this.minimizeNotes = minimized; 
-		}
-
-
-		// New version 
 		this.toggleNotes = function(){
 			var currentState = this.minimizeTodos();
 			if ( currentState ) {
@@ -66,6 +42,34 @@ define(['knockoutLib'],function(ko){
 			}
 		};
 
+		/**
+		 * Loads notes from local storage and add them to element 
+		 * with ID "notes"
+		 * 
+		 * @return {[type]} [description]
+		 */
+		this.loadNotes = function(){
+			var savedNotes = localStorage.getItem(this.localStorageKey);
+			var notesElement = document.getElementById(this.notesTextareaId);
+			if ( notesElement && savedNotes) {
+				notesElement.value = savedNotes;
+			}
+		};
+
+		/**
+		 * Saves notes to localStorage object. Source of the notes are 
+		 * from defined by "notesTextareaId"
+		 * 
+		 * @return {[type]} [description]
+		 */
+		this.saveNotes = function(){
+			var notesElement = document.getElementById(self.notesTextareaId);
+			if ( !notesElement ) {
+				return false;
+			}
+
+			localStorage.setItem(self.localStorageKey,notesElement.value);                
+		};
 	}
 	return new Notes();
 });

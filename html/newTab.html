@@ -81,7 +81,7 @@
                 </div>
                 <div class="row" data-bind="visible: minimizeTodos">
                     <div class="col-xs-12">
-                        <textarea id="notes" class="form-control" rows="15" data-bind="event: {focusout: saveNotes}"></textarea>
+                        <textarea id="notes" class="form-control" rows="15"></textarea>
                     </div>
                 </div>
             </div>
@@ -206,6 +206,7 @@
     </div>
     <div class="row top-buffer" data-bind="visible: !issueDetailLoading();">
         <span data-bind="foreach: openedIssue().notes">
+            <hr class="col-xs-12" />
             <div class="col-xs-2">
                 <strong data-bind="text: author"></strong>:
             </div>
