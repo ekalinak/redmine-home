@@ -1,3 +1,7 @@
 .top-buffer { margin-top: 20px; }
 .top-buffer-5 { margin-top: 5px; }
 img { max-width: 100%; }
+
+.row > div {
+    transition: width 0.3s, margin 0.3s;
+}

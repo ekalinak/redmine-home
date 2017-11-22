@@ -34,11 +34,9 @@ define(['knockoutLib','jquery'],function(ko,$){
 			if ( currentState ) {
 				localStorage.setItem('minimizedNotes',1);
 				this.minimizeTodos(false);
-				this.handleMainColumnWidth(true);
 			} else {
 				localStorage.setItem('minimizedNotes',0);
 				this.minimizeTodos(true);
-				this.handleMainColumnWidth(false);
 			}
 		};
 

@@ -382,7 +382,6 @@ define(
                 self.issueTableVisible(false);
                 self.issueDetailActive(true);
                 self.showTodos(false);
-                self.handleMainColumnWidth(true);
                 window.location.href = '#top';
                 self.searchVisible(false);
 
@@ -789,20 +788,13 @@ define(
                 if ( parseInt(localStorage.getItem('useTodos')) ) {
                     this.showTodos(true);
                     this.notes.loadNotes();
-                    this.handleMainColumnWidth(false);
                     if ( parseInt(localStorage.getItem('minimizedNotes')) ) {
                         this.minimizeTodos(false);
-                        this.handleMainColumnWidth();
                     }
                 }
             };
 
-            this.handleMainColumnWidth = function( full ){
-                var full = ( typeof(full) == 'undefined' ) ? true : full;
-                var className = ( full ) ? 'col-xs-12' : 'col-xs-8';
-                this.mainColumnWidth(className);
 
-            };
 
 
 
