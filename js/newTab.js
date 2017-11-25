@@ -467,7 +467,10 @@ define(
                                     if ( note.note.indexOf(att.filename) != -1 ) {
                                         note.note = note.note.replace(att.filename, att.content_url);
                                     }
-                                })
+                                });
+                                if ( openedIssue.description.indexOf(att.filename) !== -1) {
+                                    openedIssue.description = openedIssue.description.replace(att.filename, att.content_url);
+                                }
                             });
                         }
 
