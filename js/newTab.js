@@ -162,7 +162,8 @@ define(
                 chrome.storage.sync.get('options',function(items){
                     self.options(items.options);
                     self.refreshingStatus(true);
-                    var ajaxUrl = items.options['redmineUrl'] + 'issues.json?assigned_to_id=me&sort=priority:desc,id:asc';
+                    // TODO: Make "limit" configurable
+                    var ajaxUrl = items.options['redmineUrl'] + 'issues.json?assigned_to_id=me&sort=priority:desc,id:asc&limit=100';
                     $.ajax({
                         contentType : 'application/json',
                         headers : {
