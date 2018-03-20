@@ -163,7 +163,15 @@ define(
                     self.options(items.options);
                     self.refreshingStatus(true);
                     // TODO: Make "limit" configurable
-                    var ajaxUrl = items.options['redmineUrl'] + 'issues.json?assigned_to_id=me&sort=priority:desc,id:asc&limit=100';
+                    var ajaxUrl = items.options['redmineUrl'];
+                    ajaxUrl += 'issues.json?assigned_to_id=me';
+                    ajaxUrl += '&sort=';
+                    if (parseInt(items.options['sortDueDate'])) {
+                        ajaxUrl += 'due_date:asc,';
+                    }
+                    ajaxUrl += 'priority:desc,id:asc';
+                    ajaxUrl += '&limit=100';
+
                     $.ajax({
                         contentType : 'application/json',
                         headers : {
@@ -330,6 +338,9 @@ define(
                 var originalCount = issues.length;
 
                 for ( var i in issues ) {
+                    if (typeof(issues[i]['due_date']) === 'undefined') {
+                       issues[i]['due_date'] = '';
+                    }
                     if ( filterIssues.indexOf(issues[i].status.name) === -1 ) {
                         finalTasks.issues.push(issues[i]);
                     }
@@ -520,6 +531,7 @@ define(
                 { property: 'priority', sortAttribute: 'priority.name', sortOrder : ko.observable(), label: chrome.i18n.getMessage('priorityLabel'),    visible: true },
                 { property: 'subject',  sortAttribute: 'subject',       sortOrder : ko.observable(), label: chrome.i18n.getMessage('subjectLabel'),     visible: true },
                 { property: 'project',  sortAttribute: 'project.name',  sortOrder : ko.observable(), label: chrome.i18n.getMessage('projectNameLabel'), visible: true },
+                { property: 'due_date', sortAttribute: 'tracker.due_date',  sortOrder : ko.observable(), label: chrome.i18n.getMessage('due date'),     visible: true },
                 { property: 'tracker',  sortAttribute: 'tracker.name',  sortOrder : ko.observable(), label: chrome.i18n.getMessage('trackerLabel'),     visible: this.enabledIssueDetail() }
             ]);
 

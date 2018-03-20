@@ -32,7 +32,8 @@
 				showTime			: '#showTime',
                 filterStatusFlag 	: '#filterStatusFlag',
 				filterStatus		: '#filterStatus',
-				useTodos			: '#useTodos'
+				useTodos			: '#useTodos',
+				sortDueDate 		: '#sortDueDate'
 			},
 
 			optionsToLocalSave : [
@@ -42,7 +43,8 @@
 				'theme',
 				'filterStatusFlag',
 				'filterStatus',
-				'useTodos'
+				'useTodos',
+				'sortDueDate'
 			],
 
 			init : function(){
@@ -126,6 +128,7 @@
             	localStorage.removeItem('projectsData');
             	localStorage.removeItem('redmineIssues');
             	localStorage.removeItem('useTodos');
+                localStorage.removeItem('sortDueDate');
 			},
 
 			parseProjects : function(){
