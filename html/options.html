@@ -107,6 +107,18 @@
 				</select>
 			</div>
 		</div>
+		<div class="form-group">
+			<label for="sortDueDate" class="control-label col-xs-3"
+				   data-placement="right" title="Select 'Yes' if you want to use due_date as priority sorter."
+				   data-toggle="tooltip">Sort by due date ?</label>
+			<div class="col-xs-8">
+				<select id="sortDueDate" name="sort_due_date"
+						class="form-control" data-bind="event: {change : manageCustomStatus}">
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</select>
+			</div>
+		</div>
 	</fieldset>
 	<fieldset>
 		<legend>Visual configuration</legend>
