@@ -523,6 +523,8 @@ define(
              */
             this.enabledIssueDetail = ko.observable(( localStorage.getItem('issueDetailEnabled') == 1 ));
 
+            this.enabledDueDate = ko.observable(( localStorage.getItem('sortDueDate') == 1 ));
+
             /**
              * Columns configuration ( issues table )
              */
@@ -531,8 +533,8 @@ define(
                 { property: 'priority', sortAttribute: 'priority.name', sortOrder : ko.observable(), label: chrome.i18n.getMessage('priorityLabel'),    visible: true },
                 { property: 'subject',  sortAttribute: 'subject',       sortOrder : ko.observable(), label: chrome.i18n.getMessage('subjectLabel'),     visible: true },
                 { property: 'project',  sortAttribute: 'project.name',  sortOrder : ko.observable(), label: chrome.i18n.getMessage('projectNameLabel'), visible: true },
-                { property: 'due_date', sortAttribute: 'tracker.due_date',  sortOrder : ko.observable(), label: chrome.i18n.getMessage('due date'),     visible: true },
-                { property: 'tracker',  sortAttribute: 'tracker.name',  sortOrder : ko.observable(), label: chrome.i18n.getMessage('trackerLabel'),     visible: this.enabledIssueDetail() }
+                { property: 'tracker',  sortAttribute: 'tracker.name',  sortOrder : ko.observable(), label: chrome.i18n.getMessage('trackerLabel'),     visible: this.enabledIssueDetail() },
+                { property: 'due_date', sortAttribute: 'due_date',      sortOrder : ko.observable(), label: chrome.i18n.getMessage('due date'),         visible: this.enabledDueDate()}
             ]);
 
             /**
