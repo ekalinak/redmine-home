@@ -49,6 +49,7 @@
                                       style="cursor: pointer;"></span>
                         </td>
                         <td data-bind="text: tracker.name" class="text-center"></td>
+                        <td data-bind="text: due_date, visible: $parent.enabledDueDate" class="text-center"></td>
                         <td data-bind="click: $parent.openIssue, visible: $parent.enabledIssueDetail()">
                             <button class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-chevron-right"></span>
