@@ -9,7 +9,6 @@ define(
         'bootstrapLib'
     ],
     function($, ko, notes){
-
         var newTabViewModel = function(){
             var self = this;
             // Titles, Labels & Texts
@@ -391,6 +390,9 @@ define(
              * @returns {boolean}
              */
             self.openIssue = function(){
+                if (!parseInt(self.options()['issueDetailEnabled'])) {
+                    return false;
+                }
                 self.issueTableVisible(false);
                 self.issueDetailActive(true);
                 self.showTodos(false);

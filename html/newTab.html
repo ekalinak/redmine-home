@@ -30,15 +30,15 @@
                     </tr>
                     </thead>
                     <tbody data-bind="foreach: issues">
-                    <tr>
-                        <td class="text-center">
-                            <a href="" data-bind="text: id, click: $parent.redirectToIssue"></a>
-                        </td>
-                        <td class="text-center">
-                            <span data-bind="css: $parent.getIssueLabel($data), text: priority.name"></span>
-                        </td>
-                        <td data-bind="text: subject"></td>
-                        <td class="text-center">
+                        <tr>
+                            <td class="text-center">
+                                <a href="" data-bind="text: id, click: $parent.redirectToIssue"></a>
+                            </td>
+                            <td class="text-center">
+                                <span data-bind="css: $parent.getIssueLabel($data), text: priority.name"></span>
+                            </td>
+                            <td data-bind="text: subject, click: $parent.openIssue" class="subject"></td>
+                            <td class="text-center">
                                 <span data-bind="text: project.name, click: $parent.initPopover($data, event)"
                                       data-toggle="popover"
                                       data-placement="bottom"
