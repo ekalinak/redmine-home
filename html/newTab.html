@@ -128,7 +128,7 @@
                             <td class="text-center">
                                 <span data-bind="css: $parent.getIssueLabel($data), text: priority.name"></span>
                             </td>
-                            <td data-bind="text: subject"></td>
+                            <td data-bind="text: subject, click: $parent.openIssue" class="subject"></td>
                             <td class="text-center">
                                 <span data-bind="text: project.name, click: $parent.initPopover($data, event)"
                                     data-toggle="popover"

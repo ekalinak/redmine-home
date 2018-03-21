@@ -1,4 +1,4 @@
-define(['jquery','knockoutLib','tooltip','theme-init','bootstrapLib'],function($, ko){
+define(['jquery','knockoutLib','tooltip','theme-init','bootstrapLib','textile'],function($, ko){
 
         var newTabViewModel = function(){
             var self = this;
@@ -367,6 +367,9 @@ define(['jquery','knockoutLib','tooltip','theme-init','bootstrapLib'],function($
              * @returns {boolean}
              */
             self.openIssue = function(){
+                if (!parseInt(self.options()['issueDetailEnabled'])) {
+                    return false;
+                }
                 self.issueTableVisible(false);
                 self.issueDetailActive(true);
                 self.showTodos(false);
