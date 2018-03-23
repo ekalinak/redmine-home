@@ -5,3 +5,4 @@ img { max-width: 100%; }
     transition: width 0.3s, margin 0.3s;
 }
 td.subject { cursor: pointer;}
+.main-header {cursor: pointer;}
