@@ -1,4 +1,4 @@
-define(['jquery','knockoutLib','tooltip','theme-init','bootstrapLib','textile'],function($, ko){
+define(['jquery','knockoutLib','tooltip','theme-init','textile','bootstrapLib'],function($, ko){
 
         var newTabViewModel = function(){
             var self = this;
