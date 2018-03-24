@@ -573,6 +573,7 @@ define(
                 if ( parseInt(this.options()['openIssuesNewTab']) ) {
                     window.open(url, '_blank');
                 } else {
+                    $('#loader').show();
                     window.location.href = url;
                 }
             };
