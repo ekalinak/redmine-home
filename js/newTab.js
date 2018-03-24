@@ -194,7 +194,8 @@ define(['jquery','knockoutLib','tooltip','theme-init','bootstrapLib'],function($
              * Opens issue in Redmine system
              */
             self.redirectToIssue = function(){
-                window.open(self.options()['redmineUrl'] + 'issues/' + this.id,'_blank');
+                var url = self.options()['redmineUrl'] + 'issues/' + this.id;
+                self.openLink(url);
             };
 
             this.redirectToHome = function(){
