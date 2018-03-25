@@ -101,7 +101,7 @@ define(
                         self.showMyIssues(true);
                     }
                 });
-
+                jQuery('#loader').removeClass('init');
                 return this;
             };
 
@@ -573,7 +573,7 @@ define(
                 if ( parseInt(this.options()['openIssuesNewTab']) ) {
                     window.open(url, '_blank');
                 } else {
-                    $('#loader').show();
+                    $('#loader').addClass('active-link');
                     window.location.href = url;
                 }
             };
