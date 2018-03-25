@@ -10,6 +10,11 @@ requirejs.config({
 		theme : "theme-init",
 		tooltip: "tooltip-init",
 		knockout: "knockout-3.4.0"
+	},
+	shim :  {
+		'bootstrapLib': {
+			deps: ['jquery']
+		}	
 	}
 });
 
