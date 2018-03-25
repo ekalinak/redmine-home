@@ -89,7 +89,7 @@ define(['jquery','knockoutLib','tooltip','theme-init','bootstrapLib'],function($
                         self.showMyIssues(true);
                     }
                 });
-
+                jQuery('#loader').removeClass('init');
                 return this;
             };
 
@@ -540,7 +540,7 @@ define(['jquery','knockoutLib','tooltip','theme-init','bootstrapLib'],function($
                 if ( parseInt(this.options()['openIssuesNewTab']) ) {
                     window.open(url, '_blank');
                 } else {
-                    $('#loader').show();
+                    $('#loader').addClass('active-link');
                     window.location.href = url;
                 }
             };
