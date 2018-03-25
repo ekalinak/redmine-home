@@ -11,7 +11,12 @@ requirejs.config({
 		tooltip: "tooltip-init",
 		knockout: "knockout-3.4.0",
 		notes: "modules/Notes"
+	},
+	shim :  {
+		'bootstrapLib': {
+			deps: ['jquery']
+		}	
 	}
 });
 
-require(['newTab'],function(){});
+require(['newTab'],function(nt){});
