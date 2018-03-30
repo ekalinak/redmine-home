@@ -649,6 +649,14 @@ define(['jquery','knockoutLib','notes','tooltip','theme-init','textile','bootstr
                     this.issues(this.getLocalIssues());
                 } else {
                     var sortedIssues = this.issues().sort(function(a,b){
+						if ( eval('a.' + [columnConf['sortAttribute']]) == '' ) {
+							return 1;
+						}
+						
+						if ( eval('b.' + [columnConf['sortAttribute']]) == '' ) {
+							return -1;
+						}
+
                         if ( eval('a.' + [columnConf['sortAttribute']]) > eval('b.'+ [columnConf['sortAttribute']]) ) {
                             return ( columnConf.sortOrder() == 'asc' ) ? 1 : -1
                         } else if ( eval('a.'+[columnConf['sortAttribute']]) < eval('b.'+[columnConf['sortAttribute']]) ) {
