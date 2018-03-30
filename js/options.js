@@ -33,7 +33,8 @@
                 filterStatusFlag 	: '#filterStatusFlag',
 				filterStatus		: '#filterStatus',
 				useTodos			: '#useTodos',
-				sortDueDate 		: '#sortDueDate'
+				sortDueDate 		: '#sortDueDate',
+                verticalLayout		: '#verticalLayout'
 			},
 
 			optionsToLocalSave : [
@@ -44,7 +45,8 @@
 				'filterStatusFlag',
 				'filterStatus',
 				'useTodos',
-				'sortDueDate'
+				'sortDueDate',
+				'verticalLayout'
 			],
 
 			init : function(){
@@ -129,6 +131,7 @@
             	localStorage.removeItem('redmineIssues');
             	localStorage.removeItem('useTodos');
                 localStorage.removeItem('sortDueDate');
+                localStorage.removeItem('verticalLayout');
 			},
 
 			parseProjects : function(){
@@ -191,7 +194,8 @@
             	}, 200);
             	
 			},
-			setProjectLabel : function( loading = false ){
+			setProjectLabel : function( loading ){
+                var loading = ( typeof(loading) === 'undefined') ? false : loading;
 				if ( loading ) {
 					this.projectLabel('Projects are being downloaded ...');
 					return true;

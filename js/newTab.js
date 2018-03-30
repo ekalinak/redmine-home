@@ -56,6 +56,12 @@ define(['jquery','knockoutLib','tooltip','theme-init','textile','bootstrapLib'],
              */
             this.init = function(){
                 var self = this;
+
+                var verticalLayout = localStorage.getItem('verticalLayout');
+                if (window.location.pathname.indexOf('newTab.html') !== -1 && parseInt(verticalLayout)) {
+                    window.location.href = 'newTab-vertical.html';
+                }
+
                 var redmineIssues = this.getLocalIssues(true);
 
                 this.handleTodos();
@@ -89,7 +95,14 @@ define(['jquery','knockoutLib','tooltip','theme-init','textile','bootstrapLib'],
                         self.showMyIssues(true);
                     }
                 });
-                jQuery('#loader').removeClass('init');
+                $('#loader').removeClass('init');
+                $('.main-header').hover(
+                    function(){
+                        $(this).addClass('text-danger');
+                    },
+                    function(){
+                        $(this).removeClass('text-danger');
+                    });
                 return this;
             };
 
@@ -523,7 +536,7 @@ define(['jquery','knockoutLib','tooltip','theme-init','textile','bootstrapLib'],
                 { property: 'subject',  sortAttribute: 'subject',       sortOrder : ko.observable(), label: chrome.i18n.getMessage('subjectLabel'),     visible: true },
                 { property: 'project',  sortAttribute: 'project.name',  sortOrder : ko.observable(), label: chrome.i18n.getMessage('projectNameLabel'), visible: true },
                 { property: 'tracker',  sortAttribute: 'tracker.name',  sortOrder : ko.observable(), label: chrome.i18n.getMessage('trackerLabel'),     visible: this.enabledIssueDetail() },
-                { property: 'due_date', sortAttribute: 'due_date',      sortOrder : ko.observable(), label: chrome.i18n.getMessage('due date'),         visible: this.enabledDueDate()}
+                { property: 'due_date', sortAttribute: 'due_date',      sortOrder : ko.observable(), label: chrome.i18n.getMessage('dueDateLabel'),         visible: this.enabledDueDate()}
             ]);
 
             /**

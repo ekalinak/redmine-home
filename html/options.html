@@ -119,6 +119,18 @@
 				</select>
 			</div>
 		</div>
+		<div class="form-group">
+			<label for="verticalLayout" class="control-label col-xs-3"
+				   data-placement="right" title="Select 'Yes' if you want to change layout to vertical."
+				   data-toggle="tooltip">Vertical layout ?</label>
+			<div class="col-xs-8">
+				<select id="verticalLayout" name="vertical_layout"
+						class="form-control" data-bind="event: {change : manageCustomStatus}">
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</select>
+			</div>
+		</div>
 	</fieldset>
 	<fieldset>
 		<legend>Visual configuration</legend>

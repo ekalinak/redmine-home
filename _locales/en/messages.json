@@ -68,7 +68,11 @@
 	    "description" : ""
 	},
 	"trackerLabel" : {
-	    "message" : "Tracker ( Type )",
+	    "message" : "Tracker",
 	    "description" : ""
+	},
+	"dueDateLabel" : {
+		"message" : "Due date",
+		"description" : ""
 	}
 }

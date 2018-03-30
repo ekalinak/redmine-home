@@ -1,5 +1,11 @@
-.top-buffer { margin-top: 20px; }
-.top-buffer-5 { margin-top: 5px; }
+.top-buffer {
+    margin-top: 20px;
+}
+
+.top-buffer-5 {
+    margin-top: 5px;
+}
+
 #loader {
     position: fixed;
     top: 0;
@@ -10,19 +16,36 @@
     z-index: 10;
     background: #fff url(../res/preloader.gif) no-repeat center;
     visibility: hidden;
-    transition: all .6s;
+    transition: all .7s;
 }
+
 #loader.active-link {
     opacity: 0.6;
     visibility: visible;
 }
+
 #loader.init {
-    opacity: 0.9;
+    opacity: 1;
     visibility: visible;
 }
-img { max-width: 100%; }
+
+img {
+    max-width: 100%;
+}
+
 .row > div {
     transition: width 0.3s, margin 0.3s;
 }
-td.subject { cursor: pointer;}
-.main-header {cursor: pointer;}
+
+td.subject {
+    cursor: pointer;
+}
+
+.main-header {
+    cursor: pointer;
+    transition: .3s all
+}
+
+table th {
+    white-space: nowrap
+}
