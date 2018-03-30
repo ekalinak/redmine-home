@@ -1,4 +1,4 @@
-define(['jquery','knockoutLib','tooltip','theme-init','textile','bootstrapLib'],function($, ko){
+define(['jquery','knockoutLib','notes','tooltip','theme-init','textile','bootstrapLib'],function($, ko, notes){
 
         var newTabViewModel = function(){
             var self = this;
@@ -45,6 +45,9 @@ define(['jquery','knockoutLib','tooltip','theme-init','textile','bootstrapLib'],
                 description : '',
                 notes : {}
             });
+
+            // Modules
+            self.notes = notes.init();
 
             // Identifiers
             this.searchInput = '#issuesSearch';
@@ -810,14 +813,23 @@ define(['jquery','knockoutLib','tooltip','theme-init','textile','bootstrapLib'],
             };
 
             this.handleTodos = function(){
-                if ( parseInt(localStorage.getItem('useTodos')) ) {
+                if ( parseInt(localStorage.getItem('useNotes')) ) {
                     this.showTodos(true);
-                    this.loadNotes();
+                    this.notes.loadNotes();;
                     this.handleMainColumnWidth(false);
                     if ( parseInt(localStorage.getItem('minimizedNotes')) ) {
                         this.minimizeTodos(false);
                         this.handleMainColumnWidth();
                     }
+                }
+            };
+
+            this.toggleNotes = function(){
+                var result = notes.toggleNotes();
+                if ( result ) {
+                    this.handleMainColumnWidth(false);
+                } else {
+                    this.handleMainColumnWidth(true);
                 }
             };
 
@@ -828,33 +840,6 @@ define(['jquery','knockoutLib','tooltip','theme-init','textile','bootstrapLib'],
 
             };
 
-            this.saveNotes = function(){
-                var notesElement = document.getElementById('notes');
-                if ( !notesElement ) {
-                    return false;
-                }
-
-                localStorage.setItem('savedNotes',notesElement.value);                
-                console.log('Saving notes ...');
-            };
-
-            this.loadNotes = function(){
-                var savedNotes = localStorage.getItem('savedNotes');
-                document.getElementById('notes').value = savedNotes;
-            };
-
-            this.toggleNotes = function(){
-                var currentState = this.minimizeTodos();
-                if ( currentState ) {
-                    localStorage.setItem('minimizedNotes',1);
-                    this.minimizeTodos(false);
-                    this.handleMainColumnWidth(true);
-                } else {
-                    localStorage.setItem('minimizedNotes',0);
-                    this.minimizeTodos(true);
-                    this.handleMainColumnWidth(false);
-                }
-            };
         };
         ko.applyBindings(new newTabViewModel().init());
 

@@ -73,16 +73,16 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-xs-4" data-bind="visible: showTodos">
+            <div class="col-xs-4" data-bind="visible: notes.showNotes">
                 <div class="row">
-                    <h2 class="col-xs-8" for="notes" data-bind="visible: minimizeTodos">Notes: </h2>
+                    <h2 class="col-xs-8" for="notes" data-bind="visible: notes.minimizeNotes">Notes: </h2>
                     <h4 class="col-xs-4">
 
                     </h4>
                 </div>
-                <div class="row" data-bind="visible: minimizeTodos">
+                <div class="row" data-bind="visible: notes.minimizeNotes">
                     <div class="col-xs-12">
-                        <textarea id="notes" class="form-control" rows="15" data-bind="event: {focusout: saveNotes}"></textarea>
+                        <textarea id="notes" class="form-control" rows="15"></textarea>
                     </div>
                 </div>
             </div>

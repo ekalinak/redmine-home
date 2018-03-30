@@ -32,7 +32,7 @@
 				showTime			: '#showTime',
                 filterStatusFlag 	: '#filterStatusFlag',
 				filterStatus		: '#filterStatus',
-				useTodos			: '#useTodos',
+                useNotes			: '#useTodos',
 				sortDueDate 		: '#sortDueDate',
                 verticalLayout		: '#verticalLayout'
 			},
@@ -44,7 +44,7 @@
 				'theme',
 				'filterStatusFlag',
 				'filterStatus',
-				'useTodos',
+				'useNotes',
 				'sortDueDate',
 				'verticalLayout'
 			],
