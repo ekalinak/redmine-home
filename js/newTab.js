@@ -323,6 +323,8 @@ define(['jquery','knockoutLib','notes','tooltip','theme-init','textile','bootstr
                     setTimeout(this.getLocalIssues.bind(this, true), 3000);    
                 }
 
+		localData.issues = this.addDueDate(localData.issues);
+
                 if ( !parseInt(localStorage.getItem('filterStatusFlag')) ) {
                     return localData.issues;
                 }
