@@ -188,7 +188,8 @@ define(['jquery','knockoutLib','notes','tooltip','theme-init','textile','bootstr
                             localStorage.setItem('issuesLastUpdated', date.getTime() );
                             self.refreshingStatus(false);
 
-                            var filteredIssues = self.filterIssues(data.issues);
+                            var dueDateIssues = self.addDueDate(data.issues);
+                            var filteredIssues = self.filterIssues(dueDateIssues);
 
                             self.issues(filteredIssues);
                             self.issuesUpdatedFlag(date.getTime());
@@ -330,6 +331,16 @@ define(['jquery','knockoutLib','notes','tooltip','theme-init','textile','bootstr
 
             };
 
+			this.addDueDate = function(issues){
+                for ( var i in issues ) {
+                    if (typeof(issues[i]['due_date']) === 'undefined') {
+                       issues[i]['due_date'] = '';
+                    }
+                }
+
+				return issues;
+			};
+
             this.filterIssues = function( issues ){
                 if ( !parseInt(localStorage.getItem('filterStatusFlag')) ) {
                     return issues;
@@ -342,9 +353,6 @@ define(['jquery','knockoutLib','notes','tooltip','theme-init','textile','bootstr
                 var originalCount = issues.length;
 
                 for ( var i in issues ) {
-                    if (typeof(issues[i]['due_date']) === 'undefined') {
-                       issues[i]['due_date'] = '';
-                    }
                     if ( filterIssues.indexOf(issues[i].status.name) === -1 ) {
                         finalTasks.issues.push(issues[i]);
                     }
